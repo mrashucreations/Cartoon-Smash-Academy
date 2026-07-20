@@ -23,6 +23,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Ensure correct base path for GitHub Pages
+        run: |
+          if ! grep -q "base:" vite.config.ts; then
+            sed -i "s|plugins: \[react(), tailwindcss()\],|base: '/Cartoon-Smash-Academy/',\n    plugins: [react(), tailwindcss()],|" vite.config.ts
+          fi
+
       - name: Build project
         run: npm run build
 
