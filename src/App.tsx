@@ -1059,7 +1059,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={handleWatchTrailer}
-                  className="px-6 py-3.5 sm:px-8 sm:py-4 text-xs sm:text-sm md:text-base w-full sm:w-auto xl:w-[19.1875rem] xl:h-[3.75rem] shrink-0 rounded-2xl border border-purple-400/30 hover:border-pink-400/60 bg-gradient-to-r from-[#FF7A00]/15 via-[#EC4899]/15 to-[#9333EA]/20 hover:from-[#FF7A00]/25 hover:via-[#EC4899]/25 hover:to-[#9333EA]/30 text-[#eeeeee] hover:text-white font-extrabold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2.5 shadow-[0_4px_20px_rgba(147,51,234,0.15)] hover:shadow-[0_6px_25px_rgba(236,72,153,0.25)] hover:-translate-y-0.5 active:translate-y-0"
+                  className="px-6 py-3.5 sm:px-8 sm:py-4 text-xs sm:text-sm md:text-base w-full sm:w-auto xl:w-[19.1875rem] xl:h-[3.75rem] shrink-0 rounded-2xl border border-purple-500/20 hover:border-purple-500/50 bg-purple-950/20 text-[#eeeeee] hover:text-white font-extrabold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2.5 shadow-xl hover:shadow-purple-500/5 hover:-translate-y-0.5 active:translate-y-0"
                 >
                   <Play className="w-4 h-4 fill-current text-[#FF6B35]" /> Watch Trailer
                 </button>
