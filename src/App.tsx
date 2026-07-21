@@ -626,12 +626,18 @@ export default function App() {
         ? "xl:hidden flex items-center justify-center relative w-full select-none py-2 z-0 mt-2 mb-3 cursor-pointer" 
         : "hidden xl:flex xl:col-span-5 items-center justify-center relative w-full select-none py-2 sm:py-4 xl:pl-6 z-0 cursor-pointer"
       }
+      style={{
+        width: isMobileVersion ? "340.323px" : undefined,
+      }}
     >
       <div 
-        className="relative w-full max-w-[330px] xs:max-w-[380px] sm:max-w-none sm:w-[420px] sm:h-[420px] md:w-[480px] md:h-[480px] lg:w-[540px] lg:h-[540px] aspect-square flex items-center justify-center"
+        className={isMobileVersion
+          ? "relative flex items-center justify-center"
+          : "relative w-full max-w-[330px] xs:max-w-[380px] sm:max-w-none sm:w-[420px] sm:h-[420px] md:w-[480px] md:h-[480px] lg:w-[540px] lg:h-[540px] aspect-square flex items-center justify-center"
+        }
         style={{
-          width: !isMobileVersion && isSideBySide ? "35rem" : undefined,
-          height: !isMobileVersion && isSideBySide ? "35rem" : undefined,
+          width: isMobileVersion ? "324.323px" : (!isMobileVersion && isSideBySide ? "35rem" : undefined),
+          height: isMobileVersion ? "324.323px" : (!isMobileVersion && isSideBySide ? "35rem" : undefined),
           paddingLeft: !isMobileVersion && isSideBySide ? "0px" : undefined,
           marginLeft: !isMobileVersion && isSideBySide ? "-6.875rem" : undefined,
           marginRight: !isMobileVersion && isSideBySide ? "0.3125rem" : undefined,
@@ -659,9 +665,12 @@ export default function App() {
           </div>
           
         </div>
-
+ 
         {/* Crop and display the image inside a PERFECT CIRCLE shape (border-radius: 50%) */}
-        <div className="w-full h-full rounded-full overflow-hidden border-2 sm:border-4 border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.6)] z-10 relative">
+        <div 
+          className="rounded-full overflow-hidden border-2 sm:border-4 border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.6)] z-10 relative"
+          style={isMobileVersion ? { width: "316.323px", height: "316.323px" } : { width: "100%", height: "100%" }}
+        >
           <img 
             src={landingPageBgSrc} 
             alt="Cartoon Smash Academy Hero" 
@@ -672,16 +681,16 @@ export default function App() {
 
         {/* Floating Social Proof Badge/Card overlapping BOTTOM-LEFT edge */}
         <div 
-          className="absolute bottom-[2%] left-1/2 -translate-x-1/2 sm:bottom-[6%] xl:bottom-[10%] xl:left-[-50px] xl:translate-x-0 bg-[#070514]/90 backdrop-blur-md border border-white/10 rounded-[12px] sm:rounded-[18px] py-1 px-2.5 sm:py-2.5 sm:px-4 shadow-[0_12px_32px_rgba(0,0,0,0.6),_0_0_15px_rgba(147,51,234,0.15)] flex items-center gap-2 sm:gap-3 shrink-0 z-30 select-none whitespace-nowrap"
+          className="absolute bottom-[4%] sm:bottom-[6%] left-1/2 -translate-x-1/2 xl:bottom-[10%] xl:left-[-50px] xl:translate-x-0 bg-[#070514]/95 backdrop-blur-md border border-white/12 rounded-[20px] xs:rounded-[22px] sm:rounded-[18px] py-2 px-3 xs:py-2.5 xs:px-4.5 shadow-[0_12px_32px_rgba(0,0,0,0.8),_0_0_20px_rgba(147,51,234,0.15)] flex items-center gap-2.5 xs:gap-3.5 sm:gap-3 shrink-0 z-30 select-none whitespace-nowrap"
           style={{
             height: !isMobileVersion && isSideBySide ? "3.75rem" : undefined,
             width: !isMobileVersion && isSideBySide ? "20rem" : undefined,
-            marginLeft: !isMobileVersion && isSideBySide ? "10.75rem" : undefined,
-            marginBottom: !isMobileVersion && isSideBySide ? "-5rem" : undefined,
+            marginLeft: !isMobileVersion && isSideBySide ? "187.5px" : undefined,
+            marginBottom: !isMobileVersion && isSideBySide ? "-90px" : undefined,
           }}
         >
           {/* Overlapping Avatars in brand-cohesive palette (shades of purple, pink, orange) */}
-          <div className="flex -space-x-2 overflow-hidden">
+          <div className="flex -space-x-1.5 xs:-space-x-2 overflow-hidden">
             {[
               { bg: "bg-gradient-to-br from-[#9333EA] to-[#6D28D9]", text: "AM" },
               { bg: "bg-gradient-to-br from-[#EC4899] to-[#BE185D]", text: "KD" },
@@ -691,7 +700,7 @@ export default function App() {
             ].map((avatar, idx) => (
               <div 
                 key={idx} 
-                className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full ${avatar.bg} border border-[#0B081B] sm:border-2 flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-white shadow-md shrink-0`}
+                className={`w-6 h-6 xs:w-6.5 xs:h-6.5 sm:w-7 sm:h-7 rounded-full ${avatar.bg} border border-[#0B081B] sm:border-2 flex items-center justify-center text-[7.5px] xs:text-[8px] sm:text-[9px] font-bold text-white shadow-md shrink-0`}
               >
                 {avatar.text}
               </div>
@@ -699,12 +708,15 @@ export default function App() {
           </div>
           {/* Trust Text Info */}
           <div className="flex flex-col justify-center">
-            <span className="text-[10px] sm:text-sm font-bold text-gray-200 tracking-wide leading-none">
+            <span className={isMobileVersion 
+              ? "text-[11.5px] xs:text-[13px] font-extrabold text-white tracking-wide leading-none" 
+              : "text-[10px] sm:text-sm font-bold text-gray-200 tracking-wide leading-none"
+            }>
               500+ Students Enrolled
             </span>
-            <span className="text-[8.5px] sm:text-[11px] font-bold text-amber-400 mt-0.5 sm:mt-1 flex items-center gap-1 tracking-wider leading-none">
+            <span className="text-[8.5px] xs:text-[9.5px] sm:text-[11px] font-bold text-amber-400 mt-1 sm:mt-1 flex items-center gap-1.5 tracking-wider leading-none">
               <span>★★★★★</span>
-              <span className="text-gray-400 font-medium font-semibold">4.8/5 rating</span>
+              <span className="text-gray-400 font-semibold">4.8/5 rating</span>
             </span>
           </div>
         </div>
@@ -1043,7 +1055,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={handleWatchTrailer}
-                  className="px-6 py-3.5 sm:px-8 sm:py-4 text-xs sm:text-sm md:text-base w-full sm:w-auto xl:w-[19.1875rem] xl:h-[3.75rem] shrink-0 rounded-2xl border border-[#1E293B] hover:border-purple-500/50 bg-[#0B0F19]/80 text-[#eeeeee] hover:text-white font-extrabold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2.5 shadow-xl hover:shadow-purple-500/5 hover:-translate-y-0.5 active:translate-y-0"
+                  className="px-6 py-3.5 sm:px-8 sm:py-4 text-xs sm:text-sm md:text-base w-full sm:w-auto xl:w-[19.1875rem] xl:h-[3.75rem] shrink-0 rounded-2xl border border-purple-500/20 hover:border-purple-500/50 bg-purple-950/20 text-[#eeeeee] hover:text-white font-extrabold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2.5 shadow-xl hover:shadow-purple-500/5 hover:-translate-y-0.5 active:translate-y-0"
                 >
                   <Play className="w-4 h-4 fill-current text-[#FF6B35]" /> Watch Trailer
                 </button>
