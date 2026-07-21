@@ -622,12 +622,12 @@ export default function App() {
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
       className={isMobileVersion 
-        ? "xl:hidden flex items-center justify-center relative w-full select-none py-4 z-0 mt-4 mb-6" 
+        ? "xl:hidden flex items-center justify-center relative w-full select-none py-2 z-0 mt-2 mb-3" 
         : "hidden xl:flex xl:col-span-5 items-center justify-center relative w-full select-none py-2 sm:py-4 xl:pl-6 z-0"
       }
     >
       <div 
-        className="relative w-full max-w-[320px] xs:max-w-[360px] sm:max-w-none sm:w-[360px] sm:h-[360px] md:w-[410px] md:h-[410px] lg:w-[480px] lg:h-[480px] aspect-square flex items-center justify-center"
+        className="relative w-full max-w-[270px] xs:max-w-[300px] sm:max-w-none sm:w-[360px] sm:h-[360px] md:w-[410px] md:h-[410px] lg:w-[480px] lg:h-[480px] aspect-square flex items-center justify-center"
         style={{
           width: !isMobileVersion && isSideBySide ? "35rem" : undefined,
           height: !isMobileVersion && isSideBySide ? "35rem" : undefined,
@@ -642,16 +642,16 @@ export default function App() {
         <div className="absolute inset-[-20px] sm:inset-[-40px] lg:inset-[-60px] rounded-full bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.12)_0%,rgba(236,72,153,0.04)_50%,transparent_100%)] blur-[35px] lg:blur-[45px] pointer-events-none z-0" />
         
         {/* Outer glowing decorative ring/border following the circle with a visible halo gap scaled proportionally */}
-        <div className="absolute inset-[-14px] sm:inset-[-21px] lg:inset-[-30px] xl:inset-[-34px] rounded-full border border-white/20 sm:border-white/30 shadow-[0_0_24px_rgba(147,51,234,0.2),_inset_0_0_12px_rgba(236,72,153,0.1)] pointer-events-none z-10">
+        <div className="absolute inset-[-10px] xs:inset-[-14px] sm:inset-[-21px] lg:inset-[-30px] xl:inset-[-34px] rounded-full border border-white/20 sm:border-white/30 shadow-[0_0_24px_rgba(147,51,234,0.2),_inset_0_0_12px_rgba(236,72,153,0.1)] pointer-events-none z-10">
           
           {/* Continuous orbiting wrapper for the two decorative dots */}
           <div className="absolute inset-0 rounded-full animate-orbit pointer-events-none">
             {/* Small floating decorative dots sitting ON the ring line itself at 67.5 degree offsets */}
             {/* Left dot: gradient pink-to-purple */}
-            <div className="absolute top-[30.87%] left-[3.81%] -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 sm:w-5 sm:h-5 lg:w-6 lg:h-6 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 shadow-[0_0_18px_rgba(236,72,153,0.95)] z-20" />
+            <div className="absolute top-[30.87%] left-[3.81%] -translate-x-1/2 -translate-y-1/2 w-3 sm:w-5 sm:h-5 lg:w-6 lg:h-6 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 shadow-[0_0_18px_rgba(236,72,153,0.95)] z-20" />
             
             {/* Right dot: solid purple */}
-            <div className="absolute top-[69.13%] left-[96.19%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 sm:w-4 sm:h-4 lg:w-4.5 lg:h-4.5 rounded-full bg-purple-500 shadow-[0_0_15px_rgba(147,51,234,0.9)] z-20" />
+            <div className="absolute top-[69.13%] left-[96.19%] -translate-x-1/2 -translate-y-1/2 w-2.5 sm:w-4 sm:h-4 lg:w-4.5 lg:h-4.5 rounded-full bg-purple-500 shadow-[0_0_15px_rgba(147,51,234,0.9)] z-20" />
           </div>
           
         </div>
@@ -668,7 +668,7 @@ export default function App() {
 
         {/* Floating Social Proof Badge/Card overlapping BOTTOM-LEFT edge */}
         <div 
-          className="absolute bottom-[4%] left-1/2 -translate-x-1/2 sm:bottom-[6%] xl:bottom-[10%] xl:left-[-50px] xl:translate-x-0 bg-[#070514]/90 backdrop-blur-md border border-white/10 rounded-[18px] py-2 px-3 sm:py-2.5 sm:px-4 shadow-[0_12px_32px_rgba(0,0,0,0.6),_0_0_15px_rgba(147,51,234,0.15)] flex items-center gap-3 shrink-0 z-30 select-none whitespace-nowrap"
+          className="absolute bottom-[2%] left-1/2 -translate-x-1/2 sm:bottom-[6%] xl:bottom-[10%] xl:left-[-50px] xl:translate-x-0 bg-[#070514]/90 backdrop-blur-md border border-white/10 rounded-[12px] sm:rounded-[18px] py-1 px-2.5 sm:py-2.5 sm:px-4 shadow-[0_12px_32px_rgba(0,0,0,0.6),_0_0_15px_rgba(147,51,234,0.15)] flex items-center gap-2 sm:gap-3 shrink-0 z-30 select-none whitespace-nowrap"
           style={{
             height: !isMobileVersion && isSideBySide ? "3.75rem" : undefined,
             width: !isMobileVersion && isSideBySide ? "20rem" : undefined,
@@ -677,7 +677,7 @@ export default function App() {
           }}
         >
           {/* Overlapping Avatars in brand-cohesive palette (shades of purple, pink, orange) */}
-          <div className="flex -space-x-2.5 overflow-hidden">
+          <div className="flex -space-x-2 overflow-hidden">
             {[
               { bg: "bg-gradient-to-br from-[#9333EA] to-[#6D28D9]", text: "AM" },
               { bg: "bg-gradient-to-br from-[#EC4899] to-[#BE185D]", text: "KD" },
@@ -687,7 +687,7 @@ export default function App() {
             ].map((avatar, idx) => (
               <div 
                 key={idx} 
-                className={`w-7 h-7 rounded-full ${avatar.bg} border-2 border-[#0B081B] flex items-center justify-center text-[9px] font-bold text-white shadow-md shrink-0`}
+                className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full ${avatar.bg} border border-[#0B081B] sm:border-2 flex items-center justify-center text-[8px] sm:text-[9px] font-bold text-white shadow-md shrink-0`}
               >
                 {avatar.text}
               </div>
@@ -695,12 +695,12 @@ export default function App() {
           </div>
           {/* Trust Text Info */}
           <div className="flex flex-col justify-center">
-            <span className="text-xs sm:text-sm font-bold text-gray-200 tracking-wide leading-none">
+            <span className="text-[10px] sm:text-sm font-bold text-gray-200 tracking-wide leading-none">
               500+ Students Enrolled
             </span>
-            <span className="text-[10px] sm:text-[11px] font-bold text-amber-400 mt-1 flex items-center gap-1 tracking-wider leading-none">
+            <span className="text-[8.5px] sm:text-[11px] font-bold text-amber-400 mt-0.5 sm:mt-1 flex items-center gap-1 tracking-wider leading-none">
               <span>★★★★★</span>
-              <span className="text-gray-400 font-medium">4.8/5 rating</span>
+              <span className="text-gray-400 font-medium font-semibold">4.8/5 rating</span>
             </span>
           </div>
         </div>
@@ -719,7 +719,7 @@ export default function App() {
 
         {/* 3. Hero Section */}
         <header 
-          className="pt-6 pb-6 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-20 lg:pb-16 px-4 sm:px-6 lg:px-8 xl:px-12 border-b border-[#1E293B] relative overflow-hidden"
+          className="pt-4 pb-4 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-20 lg:pb-16 px-4 sm:px-6 lg:px-8 xl:px-12 border-b border-[#1E293B] relative overflow-hidden"
         >
         {/* Seamless dark elegant overlay to maintain extreme text readability and high-contrast styling */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#0c0f20]/95 via-[#0c0f20]/70 to-[#0c0f20]/20 lg:from-[#0c0f20]/95 lg:via-[#0c0f20]/50 lg:to-transparent pointer-events-none z-0"></div>
@@ -740,10 +740,10 @@ export default function App() {
               initial={{ opacity: 0, x: -25 }} 
               animate={{ opacity: 1, x: 0 }} 
               transition={{ duration: 0.65, ease: "easeOut" }}
-              className="xl:col-span-7 flex flex-col items-start text-left xl:pr-10 xl:h-[38.75rem] xl:mt-[-1.4375rem] xl:ml-0 xl:justify-between relative z-20 gap-4 sm:gap-6 xl:gap-0"
+              className="xl:col-span-7 flex flex-col items-center xl:items-start text-center xl:text-left xl:pr-10 xl:h-[38.75rem] xl:mt-[-1.4375rem] xl:ml-0 xl:justify-between relative z-20 gap-3 sm:gap-5 xl:gap-0"
             >
               {/* Image 2 Heading Typography, Breaks & Gradients matching Reference Image */}
-              <h1 className="text-[28px] xs:text-[34px] sm:text-5xl lg:text-[60px] xl:text-[60px] font-black leading-[1.2] lg:leading-[1.25] xl:leading-[1.2] tracking-tight mb-4 sm:mb-6 xl:mb-0 text-white font-sans">
+              <h1 className="text-[26px] xs:text-[32px] sm:text-5xl lg:text-[60px] xl:text-[60px] font-black leading-[1.2] lg:leading-[1.25] xl:leading-[1.2] tracking-tight mb-1.5 sm:mb-3 xl:mb-0 text-white font-sans">
                 <span className="block whitespace-nowrap">AI-Powered</span>
                 <span className="block mt-1 sm:mt-0">
                   Complete <span className="relative inline-block pb-1 sm:pb-2 cursor-default group/anim transition-transform duration-300 hover:scale-[1.01]">
@@ -792,9 +792,9 @@ export default function App() {
               {circularHeroImage(true)}
 
               {/* Subheading text matching image 1 */}
-              <p className="relative text-white/60 text-sm md:text-base lg:text-[18px] font-medium leading-relaxed max-w-xl mb-4 sm:mb-6 xl:mb-0 pl-4">
+              <p className="relative text-white/60 text-xs sm:text-sm md:text-base lg:text-[18px] font-medium leading-relaxed max-w-md sm:max-w-xl mb-1.5 sm:mb-3 xl:mb-0 pl-0 xl:pl-4 text-center xl:text-left mx-auto xl:mx-0">
                 <svg 
-                  className="absolute left-0 top-0.5 bottom-0.5 w-[3px] h-[calc(100%-4px)] select-none pointer-events-none" 
+                  className="absolute left-0 top-0.5 bottom-0.5 w-[3px] h-[calc(100%-4px)] select-none pointer-events-none hidden xl:block" 
                   viewBox="0 0 3 100" 
                   preserveAspectRatio="none"
                 >
@@ -820,18 +820,18 @@ export default function App() {
               </p>
 
               {/* Course Highlights Section */}
-              <div className="w-full mb-4 sm:mb-6 xl:mb-0 select-none">
-                <div className="text-[10px] md:text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 mb-2.5">
+              <div className="w-full mb-2 sm:mb-4 xl:mb-0 select-none">
+                <div className="text-[10px] md:text-[11px] font-black uppercase tracking-wider flex items-center justify-center xl:justify-start gap-1.5 mb-1.5 sm:mb-2.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-pink-500 shadow-[0_0_8px_#EC4899]"></span>
                   <span className="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">COURSE HIGHLIGHTS</span>
                 </div>
                 <div 
-                  className="w-full"
+                  className="w-full mx-auto xl:mx-0"
                   style={{
                     width: isSideBySide ? "39.375rem" : undefined,
                   }}
                 >
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-2.5 lg:gap-y-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-2 lg:gap-y-4 max-w-md sm:max-w-none mx-auto">
                     {[
                       { name: "Beginner to Pro", icon: <GraduationCap className="w-4 h-4 text-[#A78BFA]" /> },
                       { name: "Zero Drawing", icon: <Eraser className="w-4 h-4 text-[#A78BFA]" /> },
@@ -844,7 +844,7 @@ export default function App() {
                     ].map((item, index) => (
                       <div 
                         key={index} 
-                        className="flex items-center gap-2 group"
+                        className="flex items-center gap-2 group justify-start"
                       >
                         <div className="shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-purple-500/10 border border-purple-500/15 group-hover:bg-purple-500/20 group-hover:border-purple-500/30 transition-all duration-300">
                           {item.icon}
@@ -859,13 +859,13 @@ export default function App() {
               </div>
 
               {/* High-Fidelity "Tools Used" section with Auto-scrolling Marquee */}
-              <div className="w-full max-w-2xl mb-4 sm:mb-6 xl:mb-0 select-none">
-                <div className="text-[10px] md:text-[11px] font-black uppercase tracking-wider text-purple-400/80 flex items-center gap-1.5 mb-2.5">
+              <div className="w-full max-w-2xl mb-2 sm:mb-4 xl:mb-0 select-none">
+                <div className="text-[9px] sm:text-[10px] md:text-[11px] font-black uppercase tracking-wider text-purple-400/80 flex items-center justify-center xl:justify-start gap-1.5 mb-1.5 sm:mb-2.5">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_#3B82F6]"></span>
                   <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">TOOLS USED</span>
                 </div>
                  <div 
-                  className="w-full bg-white/[0.03] backdrop-blur-md border border-white/5 rounded-[20px] py-1.5 px-3 sm:py-2 sm:px-4 lg:py-2.5 lg:px-4.5 shadow-[0_4px_24px_rgba(0,0,0,0.15)] relative overflow-hidden pause-hover"
+                  className="w-full bg-white/[0.03] backdrop-blur-md border border-white/5 rounded-[12px] sm:rounded-[20px] py-1 px-2.5 sm:py-2 sm:px-4 lg:py-2.5 lg:px-4.5 shadow-[0_4px_24px_rgba(0,0,0,0.15)] relative overflow-hidden pause-hover mx-auto xl:mx-0"
                   style={{
                     width: isSideBySide ? "39.375rem" : undefined,
                   }}
@@ -1023,12 +1023,12 @@ export default function App() {
               </div>
 
               {/* Action Buttons Area */}
-              <div className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto xl:mb-0 mb-3 select-none">
+              <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 w-full sm:w-auto xl:mb-0 mb-1.5 select-none">
                 <CartoonSmashCTA 
                   href="https://academy.cartoonsmash.in/t/p/checkout/V4/course/6a3cf7247941125d740bf9dd/p1?callback_url=/courses/6a3cf7247941125d740bf9dd" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-10 py-4 text-base md:text-lg w-full sm:w-auto xl:w-[19.1875rem] shrink-0 shadow-2xl shadow-purple-500/20 font-black uppercase tracking-wider rounded-2xl flex items-center justify-center gap-3"
+                  className="px-6 py-3.5 sm:px-10 sm:py-4 text-sm sm:text-base md:text-lg w-full sm:w-auto xl:w-[19.1875rem] shrink-0 shadow-2xl shadow-purple-500/20 font-black uppercase tracking-wider rounded-2xl flex items-center justify-center gap-3"
                 >
                   Join the Course
                   <div className="w-6 h-6 rounded-full bg-white flex items-center justify-center shadow-md">
@@ -1039,7 +1039,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={handleWatchTrailer}
-                  className="px-8 py-4 text-sm md:text-base w-full sm:w-auto xl:w-[19.1875rem] xl:h-[3.75rem] shrink-0 rounded-2xl border border-[#1E293B] hover:border-purple-500/50 bg-[#0B0F19]/80 text-[#eeeeee] hover:text-white font-extrabold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2.5 shadow-xl hover:shadow-purple-500/5 hover:-translate-y-0.5 active:translate-y-0"
+                  className="px-6 py-3.5 sm:px-8 sm:py-4 text-xs sm:text-sm md:text-base w-full sm:w-auto xl:w-[19.1875rem] xl:h-[3.75rem] shrink-0 rounded-2xl border border-[#1E293B] hover:border-purple-500/50 bg-[#0B0F19]/80 text-[#eeeeee] hover:text-white font-extrabold uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2.5 shadow-xl hover:shadow-purple-500/5 hover:-translate-y-0.5 active:translate-y-0"
                 >
                   <Play className="w-4 h-4 fill-current text-[#FF6B35]" /> Watch Trailer
                 </button>
