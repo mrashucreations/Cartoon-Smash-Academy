@@ -620,14 +620,15 @@ export default function App() {
     <motion.div 
       initial={{ opacity: 0, scale: 0.92 }}
       animate={{ opacity: 1, scale: 1 }}
+      whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
       className={isMobileVersion 
-        ? "xl:hidden flex items-center justify-center relative w-full select-none py-2 z-0 mt-2 mb-3" 
-        : "hidden xl:flex xl:col-span-5 items-center justify-center relative w-full select-none py-2 sm:py-4 xl:pl-6 z-0"
+        ? "xl:hidden flex items-center justify-center relative w-full select-none py-2 z-0 mt-2 mb-3 cursor-pointer" 
+        : "hidden xl:flex xl:col-span-5 items-center justify-center relative w-full select-none py-2 sm:py-4 xl:pl-6 z-0 cursor-pointer"
       }
     >
       <div 
-        className="relative w-full max-w-[270px] xs:max-w-[300px] sm:max-w-none sm:w-[360px] sm:h-[360px] md:w-[410px] md:h-[410px] lg:w-[480px] lg:h-[480px] aspect-square flex items-center justify-center"
+        className="relative w-full max-w-[330px] xs:max-w-[380px] sm:max-w-none sm:w-[420px] sm:h-[420px] md:w-[480px] md:h-[480px] lg:w-[540px] lg:h-[540px] aspect-square flex items-center justify-center"
         style={{
           width: !isMobileVersion && isSideBySide ? "35rem" : undefined,
           height: !isMobileVersion && isSideBySide ? "35rem" : undefined,
@@ -638,8 +639,11 @@ export default function App() {
         }}
       >
         
-        {/* Soft radial gradient background behind the circle, blending into the page's dark background */}
-        <div className="absolute inset-[-20px] sm:inset-[-40px] lg:inset-[-60px] rounded-full bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.12)_0%,rgba(236,72,153,0.04)_50%,transparent_100%)] blur-[35px] lg:blur-[45px] pointer-events-none z-0" />
+        {/* Soft radial gradient background behind the circle, blending into the page's dark background with breathing lighting animation */}
+        <div 
+          className="absolute inset-[-20px] sm:inset-[-40px] lg:inset-[-60px] rounded-full bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.15)_0%,rgba(236,72,153,0.06)_50%,transparent_100%)] blur-[35px] lg:blur-[45px] pointer-events-none z-0 animate-pulse" 
+          style={{ animationDuration: "4s" }}
+        />
         
         {/* Outer glowing decorative ring/border following the circle with a visible halo gap scaled proportionally */}
         <div className="absolute inset-[-10px] xs:inset-[-14px] sm:inset-[-21px] lg:inset-[-30px] xl:inset-[-34px] rounded-full border border-white/20 sm:border-white/30 shadow-[0_0_24px_rgba(147,51,234,0.2),_inset_0_0_12px_rgba(236,72,153,0.1)] pointer-events-none z-10">
@@ -648,10 +652,10 @@ export default function App() {
           <div className="absolute inset-0 rounded-full animate-orbit pointer-events-none">
             {/* Small floating decorative dots sitting ON the ring line itself at 67.5 degree offsets */}
             {/* Left dot: gradient pink-to-purple */}
-            <div className="absolute top-[30.87%] left-[3.81%] -translate-x-1/2 -translate-y-1/2 w-3 sm:w-5 sm:h-5 lg:w-6 lg:h-6 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 shadow-[0_0_18px_rgba(236,72,153,0.95)] z-20" />
+            <div className="absolute top-[30.87%] left-[3.81%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 sm:w-5 sm:h-5 lg:w-6 lg:h-6 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 shadow-[0_0_18px_rgba(236,72,153,0.95)] z-20" />
             
             {/* Right dot: solid purple */}
-            <div className="absolute top-[69.13%] left-[96.19%] -translate-x-1/2 -translate-y-1/2 w-2.5 sm:w-4 sm:h-4 lg:w-4.5 lg:h-4.5 rounded-full bg-purple-500 shadow-[0_0_15px_rgba(147,51,234,0.9)] z-20" />
+            <div className="absolute top-[69.13%] left-[96.19%] -translate-x-1/2 -translate-y-1/2 w-2.5 h-2.5 sm:w-4 sm:h-4 lg:w-4.5 lg:h-4.5 rounded-full bg-purple-500 shadow-[0_0_15px_rgba(147,51,234,0.9)] z-20" />
           </div>
           
         </div>
@@ -719,7 +723,7 @@ export default function App() {
 
         {/* 3. Hero Section */}
         <header 
-          className="pt-4 pb-4 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-20 lg:pb-16 px-4 sm:px-6 lg:px-8 xl:px-12 border-b border-[#1E293B] relative overflow-hidden"
+          className="pt-4 pb-4 sm:pt-10 sm:pb-10 md:pt-12 md:pb-12 lg:pt-20 lg:pb-16 px-3 sm:px-6 lg:px-8 xl:px-12 border-b border-[#1E293B] relative overflow-hidden"
         >
         {/* Seamless dark elegant overlay to maintain extreme text readability and high-contrast styling */}
         <div className="absolute inset-0 bg-gradient-to-r from-[#0c0f20]/95 via-[#0c0f20]/70 to-[#0c0f20]/20 lg:from-[#0c0f20]/95 lg:via-[#0c0f20]/50 lg:to-transparent pointer-events-none z-0"></div>
