@@ -683,10 +683,11 @@ export default function App() {
         <div 
           className="absolute bottom-[4%] sm:bottom-[6%] left-1/2 -translate-x-1/2 xl:bottom-[10%] xl:left-[-50px] xl:translate-x-0 bg-[#070514]/95 backdrop-blur-md border border-white/12 rounded-[20px] xs:rounded-[22px] sm:rounded-[18px] py-2 px-3 xs:py-2.5 xs:px-4.5 shadow-[0_12px_32px_rgba(0,0,0,0.8),_0_0_20px_rgba(147,51,234,0.15)] flex items-center gap-2.5 xs:gap-3.5 sm:gap-3 shrink-0 z-30 select-none whitespace-nowrap"
           style={{
-            height: !isMobileVersion && isSideBySide ? "3.75rem" : undefined,
+            height: isMobileVersion ? "50px" : (!isMobileVersion && isSideBySide ? "3.75rem" : undefined),
             width: !isMobileVersion && isSideBySide ? "20rem" : undefined,
+            marginRight: isMobileVersion ? "0px" : undefined,
+            marginBottom: isMobileVersion ? "4px" : (!isMobileVersion && isSideBySide ? "-90px" : undefined),
             marginLeft: !isMobileVersion && isSideBySide ? "187.5px" : undefined,
-            marginBottom: !isMobileVersion && isSideBySide ? "-90px" : undefined,
           }}
         >
           {/* Overlapping Avatars in brand-cohesive palette (shades of purple, pink, orange) */}
@@ -714,7 +715,10 @@ export default function App() {
             }>
               500+ Students Enrolled
             </span>
-            <span className="text-[8.5px] xs:text-[9.5px] sm:text-[11px] font-bold text-amber-400 mt-1 sm:mt-1 flex items-center gap-1.5 tracking-wider leading-none">
+            <span 
+              className="text-[8.5px] xs:text-[9.5px] sm:text-[11px] font-bold text-amber-400 mt-1 sm:mt-1 flex items-center gap-1.5 tracking-wider leading-none"
+              style={isMobileVersion ? { height: "10.5px", width: "143.85px" } : undefined}
+            >
               <span>★★★★★</span>
               <span className="text-gray-400 font-semibold">4.8/5 rating</span>
             </span>
