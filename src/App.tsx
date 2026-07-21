@@ -51,6 +51,11 @@ import Footer from "./components/Footer";
 import logoSrc from "../assets/Cartoon Smash Logo.png";
 import landingPageBgSrc from "../assets/Landing_Page_Background_Image_Square.jpg";
 import mentorPicSrc from "../assets/Ashutosh Mishra Pic.jpg";
+import kidsCartoonVideo from "../assets/Website Gif Kids Cartoon.mp4";
+import movieSpoofVideo from "../assets/Website Gif Movie Spoof.mp4";
+import notYourTypeVideo from "../assets/Website Gif Not Your Type Cartoon.mp4";
+import horrorStoriesVideo from "../assets/Website Gif Horror Stories.mp4";
+import storyAnimationVideo from "../assets/Website Gif Story Animation.mp4";
 import {
   AnimateIcon,
   PremiereIcon,
@@ -360,11 +365,11 @@ export default function App() {
 
         // Preload video assets by creating video element shells to download/cache them
         const videos = [
-          "/assets/Website Gif Kids Cartoon.mp4",
-          "/assets/Website Gif Movie Spoof.mp4",
-          "/assets/Website Gif Not Your Type Cartoon.mp4",
-          "/assets/Website Gif Horror Stories.mp4",
-          "/assets/Website Gif Story Animation.mp4"
+          kidsCartoonVideo,
+          movieSpoofVideo,
+          notYourTypeVideo,
+          horrorStoriesVideo,
+          storyAnimationVideo
         ];
         videos.forEach(src => {
           const video = document.createElement("video");
@@ -1050,12 +1055,10 @@ export default function App() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[var(--brand-from)]/5 rounded-full blur-[40px] pointer-events-none animate-pulse duration-[24s]"></div>
         
         <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center">
-          <div className="text-center mb-10 md:mb-14">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+          <div className="text-center mb-6">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
               Watch Course <span className="bg-gradient-to-r from-[#FF7A00] to-[#EC4899] bg-clip-text text-transparent">Preview</span>
             </h2>
-            {/* Elegant glowing gradient design line to separate title from video */}
-            <div className="w-24 h-1 bg-gradient-to-r from-[#FF7A00] via-[#EC4899] to-[#FF7A00] mx-auto mt-5 rounded-full shadow-[0_0_12px_rgba(236,72,153,0.5)]"></div>
           </div>
  
           {/* High-Fidelity Course Preview Video Player Card */}
