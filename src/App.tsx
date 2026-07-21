@@ -835,25 +835,25 @@ export default function App() {
                     width: isSideBySide ? "39.375rem" : undefined,
                   }}
                 >
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-x-4 sm:gap-x-6 gap-y-2 lg:gap-y-4 max-w-md sm:max-w-none mx-auto">
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-x-6 sm:gap-y-4 max-w-md sm:max-w-none mx-auto">
                     {[
-                      { name: "Beginner to Pro", icon: <GraduationCap className="w-4 h-4 text-[#A78BFA]" /> },
-                      { name: "Zero Drawing", icon: <Eraser className="w-4 h-4 text-[#A78BFA]" /> },
-                      { name: "AI + Animate", icon: <Sparkles className="w-4 h-4 text-[#A78BFA]" /> },
-                      { name: "50GB+ Assets", icon: <FolderOpen className="w-4 h-4 text-[#A78BFA]" /> },
-                      { name: "Hindi Lectures", icon: <Languages className="w-4 h-4 text-[#A78BFA]" /> },
-                      { name: "Doubt Support", icon: <HelpCircle className="w-4 h-4 text-[#A78BFA]" /> },
-                      { name: "Live Projects", icon: <Rocket className="w-4 h-4 text-[#A78BFA]" /> },
-                      { name: "YouTube Career", icon: <Youtube className="w-4 h-4 text-[#A78BFA]" /> }
+                      { name: "Beginner to Pro", icon: <GraduationCap className="w-4 h-4 text-[#A78BFA] sm:text-[#A78BFA]" /> },
+                      { name: "Zero Drawing", icon: <Eraser className="w-4 h-4 text-[#A78BFA] sm:text-[#A78BFA]" /> },
+                      { name: "AI + Animate", icon: <Sparkles className="w-4 h-4 text-[#A78BFA] sm:text-[#A78BFA]" /> },
+                      { name: "50GB+ Assets", icon: <FolderOpen className="w-4 h-4 text-[#A78BFA] sm:text-[#A78BFA]" /> },
+                      { name: "Hindi Lectures", icon: <Languages className="w-4 h-4 text-[#A78BFA] sm:text-[#A78BFA]" /> },
+                      { name: "Doubt Support", icon: <HelpCircle className="w-4 h-4 text-[#A78BFA] sm:text-[#A78BFA]" /> },
+                      { name: "Live Projects", icon: <Rocket className="w-4 h-4 text-[#A78BFA] sm:text-[#A78BFA]" /> },
+                      { name: "YouTube Career", icon: <Youtube className="w-4 h-4 text-[#A78BFA] sm:text-[#A78BFA]" /> }
                     ].map((item, index) => (
                       <div 
                         key={index} 
-                        className="flex items-center gap-2 group justify-start"
+                        className="flex items-center gap-2 group justify-start p-2 sm:p-0 rounded-lg sm:rounded-none bg-gradient-to-br from-purple-950/20 via-[#12132F]/50 to-[#0A0C1A]/50 border border-purple-500/20 shadow-md sm:bg-none sm:bg-transparent sm:border-0 sm:shadow-none"
                       >
-                        <div className="shrink-0 flex items-center justify-center w-6 h-6 rounded-full bg-purple-500/10 border border-purple-500/15 group-hover:bg-purple-500/20 group-hover:border-purple-500/30 transition-all duration-300">
+                        <div className="shrink-0 flex items-center justify-center w-7 h-7 sm:w-6 sm:h-6 rounded-md sm:rounded-full bg-purple-500/10 border border-purple-500/15 group-hover:bg-purple-500/20 group-hover:border-purple-500/30 transition-all duration-300">
                           {item.icon}
                         </div>
-                        <span className="text-[11.5px] sm:text-xs font-semibold text-gray-300 tracking-wide group-hover:text-white transition-colors whitespace-nowrap">
+                        <span className="text-[11px] xs:text-[11.5px] sm:text-xs font-semibold text-gray-300 tracking-wide group-hover:text-white transition-colors whitespace-nowrap">
                           {item.name}
                         </span>
                       </div>
