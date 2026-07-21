@@ -616,6 +616,99 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
+  const circularHeroImage = (isMobileVersion: boolean) => (
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.92 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
+      className={isMobileVersion 
+        ? "xl:hidden flex items-center justify-center relative w-full select-none py-4 z-0 mt-4 mb-6" 
+        : "hidden xl:flex xl:col-span-5 items-center justify-center relative w-full select-none py-2 sm:py-4 xl:pl-6 z-0"
+      }
+    >
+      <div 
+        className="relative w-full max-w-[320px] xs:max-w-[360px] sm:max-w-none sm:w-[360px] sm:h-[360px] md:w-[410px] md:h-[410px] lg:w-[480px] lg:h-[480px] aspect-square flex items-center justify-center"
+        style={{
+          width: !isMobileVersion && isSideBySide ? "35rem" : undefined,
+          height: !isMobileVersion && isSideBySide ? "35rem" : undefined,
+          paddingLeft: !isMobileVersion && isSideBySide ? "0px" : undefined,
+          marginLeft: !isMobileVersion && isSideBySide ? "-6.875rem" : undefined,
+          marginRight: !isMobileVersion && isSideBySide ? "0.3125rem" : undefined,
+          marginTop: !isMobileVersion && isSideBySide ? "-0.9375rem" : undefined,
+        }}
+      >
+        
+        {/* Soft radial gradient background behind the circle, blending into the page's dark background */}
+        <div className="absolute inset-[-20px] sm:inset-[-40px] lg:inset-[-60px] rounded-full bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.12)_0%,rgba(236,72,153,0.04)_50%,transparent_100%)] blur-[35px] lg:blur-[45px] pointer-events-none z-0" />
+        
+        {/* Outer glowing decorative ring/border following the circle with a visible halo gap scaled proportionally */}
+        <div className="absolute inset-[-14px] sm:inset-[-21px] lg:inset-[-30px] xl:inset-[-34px] rounded-full border border-white/20 sm:border-white/30 shadow-[0_0_24px_rgba(147,51,234,0.2),_inset_0_0_12px_rgba(236,72,153,0.1)] pointer-events-none z-10">
+          
+          {/* Continuous orbiting wrapper for the two decorative dots */}
+          <div className="absolute inset-0 rounded-full animate-orbit pointer-events-none">
+            {/* Small floating decorative dots sitting ON the ring line itself at 67.5 degree offsets */}
+            {/* Left dot: gradient pink-to-purple */}
+            <div className="absolute top-[30.87%] left-[3.81%] -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 sm:w-5 sm:h-5 lg:w-6 lg:h-6 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 shadow-[0_0_18px_rgba(236,72,153,0.95)] z-20" />
+            
+            {/* Right dot: solid purple */}
+            <div className="absolute top-[69.13%] left-[96.19%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 sm:w-4 sm:h-4 lg:w-4.5 lg:h-4.5 rounded-full bg-purple-500 shadow-[0_0_15px_rgba(147,51,234,0.9)] z-20" />
+          </div>
+          
+        </div>
+
+        {/* Crop and display the image inside a PERFECT CIRCLE shape (border-radius: 50%) */}
+        <div className="w-full h-full rounded-full overflow-hidden border-2 sm:border-4 border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.6)] z-10 relative">
+          <img 
+            src={landingPageBgSrc} 
+            alt="Cartoon Smash Academy Hero" 
+            className="w-full h-full object-cover rounded-full"
+            referrerPolicy="no-referrer"
+          />
+        </div>
+
+        {/* Floating Social Proof Badge/Card overlapping BOTTOM-LEFT edge */}
+        <div 
+          className="absolute bottom-[4%] left-1/2 -translate-x-1/2 sm:bottom-[6%] xl:bottom-[10%] xl:left-[-50px] xl:translate-x-0 bg-[#070514]/90 backdrop-blur-md border border-white/10 rounded-[18px] py-2 px-3 sm:py-2.5 sm:px-4 shadow-[0_12px_32px_rgba(0,0,0,0.6),_0_0_15px_rgba(147,51,234,0.15)] flex items-center gap-3 shrink-0 z-30 select-none whitespace-nowrap"
+          style={{
+            height: !isMobileVersion && isSideBySide ? "3.75rem" : undefined,
+            width: !isMobileVersion && isSideBySide ? "20rem" : undefined,
+            marginLeft: !isMobileVersion && isSideBySide ? "10.75rem" : undefined,
+            marginBottom: !isMobileVersion && isSideBySide ? "-5rem" : undefined,
+          }}
+        >
+          {/* Overlapping Avatars in brand-cohesive palette (shades of purple, pink, orange) */}
+          <div className="flex -space-x-2.5 overflow-hidden">
+            {[
+              { bg: "bg-gradient-to-br from-[#9333EA] to-[#6D28D9]", text: "AM" },
+              { bg: "bg-gradient-to-br from-[#EC4899] to-[#BE185D]", text: "KD" },
+              { bg: "bg-gradient-to-br from-[#FF7A00] to-[#C2410C]", text: "RS" },
+              { bg: "bg-gradient-to-br from-[#C084FC] to-[#8B5CF6]", text: "PT" },
+              { bg: "bg-gradient-to-br from-[#F472B6] to-[#DB2777]", text: "SY" }
+            ].map((avatar, idx) => (
+              <div 
+                key={idx} 
+                className={`w-7 h-7 rounded-full ${avatar.bg} border-2 border-[#0B081B] flex items-center justify-center text-[9px] font-bold text-white shadow-md shrink-0`}
+              >
+                {avatar.text}
+              </div>
+            ))}
+          </div>
+          {/* Trust Text Info */}
+          <div className="flex flex-col justify-center">
+            <span className="text-xs sm:text-sm font-bold text-gray-200 tracking-wide leading-none">
+              500+ Students Enrolled
+            </span>
+            <span className="text-[10px] sm:text-[11px] font-bold text-amber-400 mt-1 flex items-center gap-1 tracking-wider leading-none">
+              <span>★★★★★</span>
+              <span className="text-gray-400 font-medium">4.8/5 rating</span>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </motion.div>
+  );
+
   return (
     <>
       <div 
@@ -695,6 +788,8 @@ export default function App() {
                   </span> Course
                 </span>
               </h1>
+
+              {circularHeroImage(true)}
 
               {/* Subheading text matching image 1 */}
               <p className="relative text-white/60 text-sm md:text-base lg:text-[18px] font-medium leading-relaxed max-w-xl mb-4 sm:mb-6 xl:mb-0 pl-4">
@@ -953,93 +1048,7 @@ export default function App() {
             </motion.div>
 
             {/* Right Column: Rebalanced with a stunning extra-large circular hero image composition */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, ease: "easeOut", delay: 0.15 }}
-              className="xl:col-span-5 flex items-center justify-center relative w-full select-none py-2 sm:py-4 xl:pl-6 z-0"
-            >
-              <div 
-                className="relative w-full max-w-[320px] xs:max-w-[360px] sm:max-w-none sm:w-[360px] sm:h-[360px] md:w-[410px] md:h-[410px] lg:w-[480px] lg:h-[480px] aspect-square flex items-center justify-center"
-                style={{
-                  width: isSideBySide ? "35rem" : undefined,
-                  height: isSideBySide ? "35rem" : undefined,
-                  paddingLeft: isSideBySide ? "0px" : undefined,
-                  marginLeft: isSideBySide ? "-6.875rem" : undefined,
-                  marginRight: isSideBySide ? "0.3125rem" : undefined,
-                  marginTop: isSideBySide ? "-0.9375rem" : undefined,
-                }}
-              >
-                
-                {/* Soft radial gradient background behind the circle, blending into the page's dark background */}
-                <div className="absolute inset-[-20px] sm:inset-[-40px] lg:inset-[-60px] rounded-full bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.12)_0%,rgba(236,72,153,0.04)_50%,transparent_100%)] blur-[35px] lg:blur-[45px] pointer-events-none z-0" />
-                
-                {/* Outer glowing decorative ring/border following the circle with a visible halo gap scaled proportionally */}
-                <div className="absolute inset-[-14px] sm:inset-[-21px] lg:inset-[-30px] xl:inset-[-34px] rounded-full border border-white/20 sm:border-white/30 shadow-[0_0_24px_rgba(147,51,234,0.2),_inset_0_0_12px_rgba(236,72,153,0.1)] pointer-events-none z-10">
-                  
-                  {/* Continuous orbiting wrapper for the two decorative dots */}
-                  <div className="absolute inset-0 rounded-full animate-orbit pointer-events-none">
-                    {/* Small floating decorative dots sitting ON the ring line itself at 67.5 degree offsets */}
-                    {/* Left dot: gradient pink-to-purple */}
-                    <div className="absolute top-[30.87%] left-[3.81%] -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 sm:w-5 sm:h-5 lg:w-6 lg:h-6 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 shadow-[0_0_18px_rgba(236,72,153,0.95)] z-20" />
-                    
-                    {/* Right dot: solid purple */}
-                    <div className="absolute top-[69.13%] left-[96.19%] -translate-x-1/2 -translate-y-1/2 w-3 h-3 sm:w-4 sm:h-4 lg:w-4.5 lg:h-4.5 rounded-full bg-purple-500 shadow-[0_0_15px_rgba(147,51,234,0.9)] z-20" />
-                  </div>
-                  
-                </div>
-
-                {/* Crop and display the image inside a PERFECT CIRCLE shape (border-radius: 50%) */}
-                <div className="w-full h-full rounded-full overflow-hidden border-2 sm:border-4 border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.6)] z-10 relative">
-                  <img 
-                    src={landingPageBgSrc} 
-                    alt="Cartoon Smash Academy Hero" 
-                    className="w-full h-full object-cover rounded-full"
-                    referrerPolicy="no-referrer"
-                  />
-                </div>
-
-                {/* Floating Social Proof Badge/Card overlapping BOTTOM-LEFT edge */}
-                <div 
-                  className="absolute bottom-[4%] left-1/2 -translate-x-1/2 sm:bottom-[6%] xl:bottom-[10%] xl:left-[-50px] xl:translate-x-0 bg-[#070514]/90 backdrop-blur-md border border-white/10 rounded-[18px] py-2 px-3 sm:py-2.5 sm:px-4 shadow-[0_12px_32px_rgba(0,0,0,0.6),_0_0_15px_rgba(147,51,234,0.15)] flex items-center gap-3 shrink-0 z-30 select-none whitespace-nowrap"
-                  style={{
-                    height: isSideBySide ? "3.75rem" : undefined,
-                    width: isSideBySide ? "20rem" : undefined,
-                    marginLeft: isSideBySide ? "10.75rem" : undefined,
-                    marginBottom: isSideBySide ? "-5rem" : undefined,
-                  }}
-                >
-                  {/* Overlapping Avatars in brand-cohesive palette (shades of purple, pink, orange) */}
-                  <div className="flex -space-x-2.5 overflow-hidden">
-                    {[
-                      { bg: "bg-gradient-to-br from-[#9333EA] to-[#6D28D9]", text: "AM" },
-                      { bg: "bg-gradient-to-br from-[#EC4899] to-[#BE185D]", text: "KD" },
-                      { bg: "bg-gradient-to-br from-[#FF7A00] to-[#C2410C]", text: "RS" },
-                      { bg: "bg-gradient-to-br from-[#C084FC] to-[#8B5CF6]", text: "PT" },
-                      { bg: "bg-gradient-to-br from-[#F472B6] to-[#DB2777]", text: "SY" }
-                    ].map((avatar, idx) => (
-                      <div 
-                        key={idx} 
-                        className={`w-7 h-7 rounded-full ${avatar.bg} border-2 border-[#0B081B] flex items-center justify-center text-[9px] font-bold text-white shadow-md shrink-0`}
-                      >
-                        {avatar.text}
-                      </div>
-                    ))}
-                  </div>
-                  {/* Trust Text Info */}
-                  <div className="flex flex-col justify-center">
-                    <span className="text-xs sm:text-sm font-bold text-gray-200 tracking-wide leading-none">
-                      500+ Students Enrolled
-                    </span>
-                    <span className="text-[10px] sm:text-[11px] font-bold text-amber-400 mt-1 flex items-center gap-1 tracking-wider leading-none">
-                      <span>★★★★★</span>
-                      <span className="text-gray-400 font-medium">4.8/5 rating</span>
-                    </span>
-                  </div>
-                </div>
-
-              </div>
-            </motion.div>
+            {circularHeroImage(false)}
 
           </div>
 
