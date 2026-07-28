@@ -4,16 +4,7 @@ import logoSrc from "../../assets/Cartoon Smash Logo.png";
 
 export default function Header() {
   const handleLoginClick = () => {
-    const width = 500;
-    const height = 650;
-    const left = (window.screen.width / 2) - (width / 2);
-    const top = (window.screen.height / 2) - (height / 2);
-
-    window.open(
-      "https://academy.cartoonsmash.in/t/public/login",
-      "graphyLogin",
-      `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`
-    );
+    window.location.href = "https://academy.cartoonsmash.in";
   };
 
   return (
@@ -57,7 +48,7 @@ export default function Header() {
             </span>
             
             <span className="tracking-wide text-gray-300 group-hover:text-white transition-colors duration-300 font-sans">
-              Student Login
+              Student Portal
             </span>
             
             <LogIn className="w-4 h-4 text-gray-400 group-hover:text-purple-400 transition-all duration-300 group-hover:translate-x-0.5" />
