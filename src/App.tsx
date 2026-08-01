@@ -48,6 +48,7 @@ import FAQSection from "./components/FAQSection";
 import VideoCarousel from "./components/VideoCarousel";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import WhatsAppButton from "./components/WhatsAppButton";
 import logoSrc from "../assets/Cartoon Smash Logo.png";
 import landingPageBgSrc from "../assets/Landing_Page_Background_Image_Square.jpg";
 import mentorPicSrc from "../assets/Ashutosh Mishra Pic.jpg";
@@ -2145,6 +2146,8 @@ export default function App() {
         )}
       </AnimatePresence>
 
+      {/* Floating WhatsApp Chat Button */}
+      <WhatsAppButton isBottomBarVisible={isMobile && !isPricingVisible} />
     </>
   );
 }
