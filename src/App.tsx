@@ -340,6 +340,64 @@ export default function App() {
   const [isMobile, setIsMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 768 : false);
   const [isSideBySide, setIsSideBySide] = useState(typeof window !== "undefined" ? window.innerWidth >= 1280 : false);
 
+  // Geo-based dynamic pricing state (Default: India pricing to prevent flickering)
+  const [pricing, setPricing] = useState({
+    originalPrice: "₹7,999",
+    dealPrice: "₹2,999",
+  });
+
+  // Detect visitor's country on page load with 3-second timeout and sessionStorage caching
+  useEffect(() => {
+    try {
+      const cachedCountry = sessionStorage.getItem("user_country_code");
+      if (cachedCountry) {
+        if (cachedCountry === "IN") {
+          setPricing({ originalPrice: "₹7,999", dealPrice: "₹2,999" });
+        } else {
+          setPricing({ originalPrice: "$89", dealPrice: "$33" });
+        }
+        return;
+      }
+    } catch {
+      // sessionStorage might fail in restricted environments; proceed to fetch
+    }
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3000);
+
+    fetch("https://ipapi.co/json/", { signal: controller.signal })
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+        return res.json();
+      })
+      .then((data) => {
+        clearTimeout(timeoutId);
+        const countryCode = data?.country_code || data?.country;
+        if (countryCode) {
+          try {
+            sessionStorage.setItem("user_country_code", countryCode);
+          } catch {
+            // Ignore storage errors
+          }
+
+          if (countryCode === "IN") {
+            setPricing({ originalPrice: "₹7,999", dealPrice: "₹2,999" });
+          } else {
+            setPricing({ originalPrice: "$89", dealPrice: "$33" });
+          }
+        }
+      })
+      .catch(() => {
+        // Fallback or timeout: default to India pricing (already set)
+        setPricing({ originalPrice: "₹7,999", dealPrice: "₹2,999" });
+      });
+
+    return () => {
+      clearTimeout(timeoutId);
+      controller.abort();
+    };
+  }, []);
+
   // Trigger interactivity and preloading after window load
   useEffect(() => {
     const handleSettle = () => {
@@ -1669,7 +1727,7 @@ export default function App() {
                             <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider font-mono">Original Price</span>
                             <div className="relative inline-flex items-center">
                               <span className="text-[23px] font-normal text-[#6a7282] tracking-tight font-sans line-through decoration-1">
-                                ₹7,999
+                                {pricing.originalPrice}
                               </span>
                             </div>
                           </div>
@@ -1681,7 +1739,7 @@ export default function App() {
                           <div className="flex flex-col items-end text-right">
                             <span className="text-[9px] font-black text-emerald-400 uppercase tracking-widest font-mono">Special Deal Price</span>
                             <span className="text-4xl sm:text-5xl font-black text-white tracking-tighter bg-gradient-to-r from-white via-white to-[#FF6B35] bg-clip-text text-transparent font-sans leading-none drop-shadow-[0_2px_8px_rgba(124,58,237,0.3)]">
-                              ₹2,999
+                              {pricing.dealPrice}
                             </span>
                           </div>
                         </div>
@@ -1757,12 +1815,12 @@ export default function App() {
                   </div>
 
                   <div className="flex items-center justify-between gap-2 mt-1">
-                    {/* Focus on 7999, styled beautifully and cut */}
+                    {/* Focus on original price, styled beautifully and cut */}
                     <div className="flex flex-col gap-0.5">
                       <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider font-mono">Original Price</span>
                       <div className="relative inline-flex items-center">
                         <span className="text-[22px] font-normal text-[#848994] tracking-tight font-sans line-through decoration-1">
-                          ₹7,999
+                          {pricing.originalPrice}
                         </span>
                       </div>
                     </div>
@@ -1770,11 +1828,11 @@ export default function App() {
                     {/* Simple beautiful arrow connector */}
                     <div className="text-[#A78BFA]/50 text-xl font-black font-sans animate-pulse">→</div>
 
-                    {/* Clean, HUGE, and prominent ₹2,999 deal price */}
+                    {/* Clean, HUGE, and prominent deal price */}
                     <div className="flex flex-col items-end text-right">
                       <span className="text-[9px] font-bold text-emerald-400 uppercase tracking-widest font-mono">Deal Price</span>
                       <span className="text-[2.85rem] font-black text-white tracking-tighter bg-gradient-to-r from-white via-white to-[#FF6B35] bg-clip-text text-transparent font-sans leading-none drop-shadow-[0_2px_10px_rgba(124,58,237,0.25)]">
-                        ₹2,999
+                        {pricing.dealPrice}
                       </span>
                     </div>
                   </div>
@@ -1935,8 +1993,8 @@ export default function App() {
                       <span className="block text-sm font-semibold text-gray-300">Complete 10-Level Curriculum</span>
                     </div>
                     <div className="text-right">
-                      <span className="text-xs text-gray-500 line-through">₹7,999</span>
-                      <span className="block text-2xl font-black text-[#22C55E]">₹2,999</span>
+                      <span className="text-xs text-gray-500 line-through">{pricing.originalPrice}</span>
+                      <span className="block text-2xl font-black text-[#22C55E]">{pricing.dealPrice}</span>
                     </div>
                   </div>
 
@@ -2028,7 +2086,7 @@ export default function App() {
                         </>
                       ) : (
                         <>
-                          🚀 Pay ₹2,999 & Smash Your Skills!
+                          🚀 Pay {pricing.dealPrice} & Smash Your Skills!
                         </>
                       )}
                       {/* Premium Shimmer Sweep */}
