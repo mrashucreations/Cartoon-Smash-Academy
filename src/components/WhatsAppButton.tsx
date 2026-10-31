@@ -31,7 +31,7 @@ export default function WhatsAppButton({ isBottomBarVisible = false }: WhatsAppB
   }, [showNotification]);
 
   const whatsappUrl =
-    "https://wa.me/917855008895?text=Hi%2C%20I%20have%20a%20question%20about%20the%202D%20Animation%20course.";
+    "https://wa.me/918260208895?text=Hi%2C%20I%20have%20a%20question%20about%20the%202D%20Animation%20course.";
 
   return (
     <AnimatePresence>
