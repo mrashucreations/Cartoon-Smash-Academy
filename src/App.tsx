@@ -40,7 +40,8 @@ import {
   TrendingUp,
   Eraser,
   HelpCircle,
-  Star
+  Star,
+  Copy
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import CurriculumSection from "./components/CurriculumSection";
@@ -159,6 +160,510 @@ export function CartoonSmashCTA({
         {children}
       </span>
     </a>
+  );
+}
+
+export function DiyaIcon({ lit = true, className = "w-4 h-4" }: { lit?: boolean; className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <defs>
+        <linearGradient id="cs-diya-flame-grad" x1="12" y1="2" x2="12" y2="12" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#FEF08A" />
+          <stop offset="45%" stopColor="#FBBF24" />
+          <stop offset="85%" stopColor="#EA580C" />
+          <stop offset="100%" stopColor="#DC2626" />
+        </linearGradient>
+        <linearGradient id="cs-diya-base-grad" x1="12" y1="13" x2="12" y2="21" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#F59E0B" />
+          <stop offset="60%" stopColor="#B45309" />
+          <stop offset="100%" stopColor="#78350F" />
+        </linearGradient>
+      </defs>
+
+      {/* Flame or Wick */}
+      {lit ? (
+        <g className="origin-bottom animate-pulse">
+          {/* Flame outer */}
+          <path
+            d="M12 2.5C12 2.5 9 6.5 9 9.5C9 11.2 10.3 12.5 12 12.5C13.7 12.5 15 11.2 15 9.5C15 6.5 12 2.5 12 2.5Z"
+            fill="url(#cs-diya-flame-grad)"
+          />
+          {/* Flame inner bright core */}
+          <path
+            d="M12 4.5C12 4.5 10.2 7 10.2 9.5C10.2 10.5 11 11.3 12 11.3C13 11.3 13.8 10.5 13.8 9.5C13.8 7 12 4.5 12 4.5Z"
+            fill="#FEF9C3"
+          />
+        </g>
+      ) : (
+        /* Unlit Wick */
+        <path
+          d="M12 9C12 9 11.8 10.5 11.6 11.5C11.5 12 11.8 12.5 12 12.8"
+          stroke="#78716C"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
+      )}
+
+      {/* Diya Base Clay / Brass Lamp */}
+      <path
+        d="M3.5 13.5C3.5 13.5 4.5 19 12 19C19.5 19 20.5 13.5 20.5 13.5C20.5 13.5 16.5 15 12 15C7.5 15 3.5 13.5 3.5 13.5Z"
+        fill="url(#cs-diya-base-grad)"
+      />
+      {/* Diya Rim */}
+      <ellipse cx="12" cy="13.5" rx="8.5" ry="1.6" fill="#D97706" opacity="0.8" />
+      {/* Lamp Base Pedestal */}
+      <path
+        d="M9.5 19C10 20 10.8 20.8 12 20.8C13.2 20.8 14 20 14.5 19H9.5Z"
+        fill="#78350F"
+      />
+    </svg>
+  );
+}
+
+function formatCountdown(timeLeft: { days: number; hours: number; minutes: number; seconds: number }) {
+  const pad = (n: number) => String(n).padStart(2, "0");
+  if (timeLeft.days > 0) {
+    return `${pad(timeLeft.days)}d : ${pad(timeLeft.hours)}h : ${pad(timeLeft.minutes)}m : ${pad(timeLeft.seconds)}s`;
+  }
+  return `${pad(timeLeft.hours)}h : ${pad(timeLeft.minutes)}m : ${pad(timeLeft.seconds)}s`;
+}
+
+function DiwaliTopBar({
+  diwaliOffer,
+  timeLeft,
+  copied,
+  onCopy,
+}: {
+  diwaliOffer: { code: string; off: string; final: string };
+  timeLeft: { days: number; hours: number; minutes: number; seconds: number; totalHours: number };
+  copied: boolean;
+  onCopy: () => void;
+}) {
+  return (
+    <div 
+      className="w-full bg-[#0c0f20]/95 backdrop-blur-md border-b border-amber-500/25 text-amber-100 text-xs select-none relative z-50 flex items-center justify-center px-2.5 sm:px-4 overflow-hidden shadow-[0_2px_15px_rgba(251,191,36,0.06)]"
+      style={{ height: "36px", minHeight: "36px", maxHeight: "36px" }}
+    >
+      {/* Subtle festive atmospheric radial glow blending with site's dark palette */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_120%_at_50%_0%,rgba(251,191,36,0.12),rgba(124,58,237,0.06)_60%,transparent_100%)] pointer-events-none" />
+
+      {/* Elegant fine-line golden highlight sweep at bottom border */}
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 sm:w-1/2 h-[1px] bg-gradient-to-r from-transparent via-amber-400/50 to-transparent pointer-events-none" />
+
+      {/* Desktop view: single line with harmonious balance */}
+      <div className="hidden sm:flex items-center justify-center gap-2.5 lg:gap-3 text-xs tracking-wide w-full max-w-7xl mx-auto relative z-10">
+        {/* Diya Art & Festive Badge */}
+        <div className="flex items-center gap-1.5 shrink-0">
+          <div className="relative flex items-center justify-center shrink-0">
+            <span className="absolute w-5 h-5 rounded-full bg-amber-400/25 blur-[3px] animate-pulse" />
+            <DiyaIcon lit className="w-4 h-4 shrink-0 relative z-10 drop-shadow-[0_0_6px_rgba(251,191,36,0.85)] -mt-0.5" />
+          </div>
+          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-purple-500/15 border border-amber-400/30 text-[10px] font-mono font-black text-amber-300 uppercase tracking-widest shadow-[0_0_10px_rgba(251,191,36,0.12)]">
+            <Sparkles className="w-2.5 h-2.5 text-amber-400 animate-pulse" />
+            Diwali Special Offer
+          </span>
+        </div>
+
+        <span className="text-white/20 font-mono text-[10px]">•</span>
+
+        {/* Offer Text & Coupon Code */}
+        <div className="flex items-center gap-1.5 text-xs text-gray-300">
+          <span>
+            Extra <span className="font-extrabold text-amber-300 drop-shadow-[0_0_8px_rgba(251,191,36,0.35)]">{diwaliOffer.off} OFF</span> with code
+          </span>
+          <span className="font-mono font-black text-amber-300 tracking-wider bg-[#141833] px-2 py-0.5 rounded-md border border-amber-400/35 shadow-inner">
+            {diwaliOffer.code}
+          </span>
+        </div>
+
+        {/* Tactile Copy Button */}
+        <button
+          onClick={onCopy}
+          type="button"
+          aria-label="Copy Diwali coupon code"
+          className="bg-gradient-to-r from-amber-400/20 via-orange-500/20 to-amber-400/20 hover:from-amber-400/35 hover:to-orange-500/35 active:scale-95 text-amber-200 hover:text-white border border-amber-400/40 rounded-md px-2.5 py-0.5 text-[10px] font-mono font-bold transition-all cursor-pointer flex items-center gap-1 shadow-[0_0_8px_rgba(251,191,36,0.15)] h-6 min-w-[58px] justify-center"
+        >
+          {copied ? (
+            <span className="text-emerald-400 font-bold flex items-center gap-0.5">
+              <Check className="w-2.5 h-2.5 text-emerald-400" />
+              Copied ✓
+            </span>
+          ) : (
+            <span className="flex items-center gap-1">
+              <Copy className="w-2.5 h-2.5 text-amber-300/80" />
+              Copy
+            </span>
+          )}
+        </button>
+
+        <span className="text-white/20 font-mono text-[10px]">•</span>
+
+        {/* Timer Chip */}
+        <div className="flex items-center gap-1.5 bg-[#141833]/80 border border-amber-400/25 px-2.5 py-0.5 rounded-md text-[10.5px] font-mono tracking-wider shadow-inner shrink-0">
+          <Clock className="w-3 h-3 text-[#FF6B35] animate-pulse shrink-0" />
+          <span className="text-gray-400 text-[9.5px] uppercase font-mono font-semibold">Ends in</span>
+          <span className="text-amber-300 font-extrabold">
+            {formatCountdown(timeLeft)}
+          </span>
+        </div>
+      </div>
+
+      {/* Mobile view: single line with guaranteed safe fit and non-overflowing Copy button */}
+      <div className="flex sm:hidden items-center justify-between gap-2 text-[11px] tracking-tight w-full max-w-full overflow-hidden relative z-10 h-full">
+        <div className="flex items-center gap-1.5 truncate min-w-0 flex-1">
+          <div className="relative flex items-center justify-center shrink-0">
+            <span className="absolute w-4 h-4 rounded-full bg-amber-400/25 blur-[2px] animate-pulse" />
+            <DiyaIcon lit className="w-3.5 h-3.5 shrink-0 relative z-10 drop-shadow-[0_0_5px_rgba(251,191,36,0.85)] -mt-0.5" />
+          </div>
+          <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-amber-400/10 border border-amber-400/30 text-[9px] font-mono font-black text-amber-300 uppercase tracking-wider shrink-0">
+            Diwali Special
+          </span>
+          <span className="truncate text-gray-300 text-[10.5px]">
+            <span className="font-extrabold text-amber-300">{diwaliOffer.off} OFF</span> ·{" "}
+            <span className="font-mono font-black text-amber-200 bg-[#141833] px-1 py-0.5 rounded border border-amber-400/30 text-[10px]">{diwaliOffer.code}</span>
+          </span>
+        </div>
+        <button
+          onClick={onCopy}
+          type="button"
+          aria-label="Copy Diwali coupon code"
+          className="shrink-0 h-6.5 px-2.5 rounded-md bg-gradient-to-r from-amber-400/25 to-orange-500/25 hover:from-amber-400/40 hover:to-orange-500/40 active:scale-95 text-amber-200 border border-amber-400/40 text-[10px] font-mono font-bold transition-all cursor-pointer flex items-center justify-center gap-1 shadow-sm"
+        >
+          {copied ? (
+            <span className="text-emerald-400 font-bold flex items-center gap-0.5">
+              <Check className="w-2.5 h-2.5 text-emerald-400" />
+              Copied ✓
+            </span>
+          ) : (
+            <span className="flex items-center gap-1">
+              <Copy className="w-2.5 h-2.5 text-amber-300" />
+              Copy
+            </span>
+          )}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function DiyaCouponRow({
+  diwaliOffer,
+  isUnlocked,
+  onUnlock,
+  copied,
+  onCopy,
+}: {
+  diwaliOffer: { code: string; off: string; final: string };
+  isUnlocked: boolean;
+  onUnlock: () => void;
+  copied: boolean;
+  onCopy: () => void;
+}) {
+  const [isIgniting, setIsIgniting] = useState(false);
+
+  const handleIgnite = () => {
+    if (isUnlocked || isIgniting) return;
+    setIsIgniting(true);
+    setTimeout(() => {
+      onUnlock();
+      setIsIgniting(false);
+    }, 750);
+  };
+
+  if (isUnlocked) {
+    return (
+      <div 
+        className="relative w-full h-12 sm:h-13 max-h-[56px] rounded-xl px-3 sm:px-4 py-2 border border-amber-400/40 bg-gradient-to-r from-amber-950/40 via-[#1D244D]/80 to-amber-950/30 flex items-center justify-between gap-2 shadow-[0_0_15px_rgba(251,191,36,0.12)] overflow-hidden select-none transition-all duration-300"
+      >
+        <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+          <DiyaIcon lit className="w-5 h-5 shrink-0" />
+          <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-sans tracking-tight truncate">
+            <span className="font-mono font-black text-amber-300 tracking-wider bg-amber-400/10 px-1.5 py-0.5 rounded border border-amber-400/25 shrink-0">
+              {diwaliOffer.code}
+            </span>
+            <span className="text-gray-400 font-bold">·</span>
+            <span className="font-black text-emerald-400 text-xs sm:text-sm font-sans shrink-0">
+              {diwaliOffer.off} off
+            </span>
+          </div>
+        </div>
+
+        <button
+          onClick={onCopy}
+          type="button"
+          aria-label="Copy Diwali coupon code"
+          className="bg-amber-400/20 hover:bg-amber-400/35 active:scale-95 text-amber-200 border border-amber-400/50 rounded-lg px-2.5 sm:px-3 py-1 text-xs font-mono font-bold transition-all flex items-center gap-1.5 shrink-0 min-h-[36px] shadow-[0_0_10px_rgba(251,191,36,0.15)] cursor-pointer"
+        >
+          {copied ? (
+            <span className="text-emerald-400 font-bold">Copied ✓</span>
+          ) : (
+            <>
+              <Copy className="w-3.5 h-3.5" />
+              <span>Copy</span>
+            </>
+          )}
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      role="button"
+      tabIndex={0}
+      aria-label="Reveal Diwali coupon code"
+      onClick={handleIgnite}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleIgnite();
+        }
+      }}
+      className="relative w-full h-12 sm:h-13 max-h-[56px] rounded-xl px-3 sm:px-4 py-2 border border-dashed border-amber-400/40 hover:border-amber-400/70 bg-amber-950/20 hover:bg-amber-950/30 flex items-center justify-between gap-2.5 cursor-pointer transition-all duration-300 group select-none overflow-hidden"
+    >
+      {/* Short ignition particle / glow bursts confined inside row (max ~1s) */}
+      {isIgniting && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center">
+          <div className="absolute left-4 w-12 h-12 bg-amber-400/35 rounded-full blur-md animate-ping" />
+          <span className="absolute left-7 top-1.5 w-1 h-1 bg-yellow-200 rounded-full animate-ping" />
+          <span className="absolute left-9 bottom-2 w-1.5 h-1.5 bg-amber-300 rounded-full animate-pulse" />
+        </div>
+      )}
+
+      <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+        <div className="relative shrink-0">
+          <DiyaIcon 
+            lit={isIgniting} 
+            className={`w-5 h-5 transition-transform duration-300 ${
+              isIgniting 
+                ? "scale-125 filter drop-shadow-[0_0_8px_rgba(245,158,11,0.8)]" 
+                : "group-hover:scale-110 opacity-70 group-hover:opacity-100"
+            }`} 
+          />
+          {!isIgniting && (
+            <span className="absolute -top-0.5 -right-0.5 w-1.5 h-1.5 rounded-full bg-amber-400/60 animate-ping" />
+          )}
+        </div>
+        <span className="text-[11px] sm:text-xs font-semibold text-amber-200/90 group-hover:text-amber-100 transition-colors tracking-wide truncate">
+          Tap the diya to reveal your Diwali code
+        </span>
+      </div>
+
+      <div className="flex items-center gap-1 text-[10px] font-mono uppercase tracking-wider text-amber-400/80 bg-amber-400/10 px-2 py-1 rounded border border-amber-400/20 shrink-0 font-bold group-hover:bg-amber-400/20 transition-all">
+        <Sparkles className="w-3 h-3 text-amber-400 animate-pulse" />
+        <span>Reveal</span>
+      </div>
+    </div>
+  );
+}
+
+function playFirecrackerCelebrationSound() {
+  try {
+    const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+    if (!AudioContextClass) return;
+    const ctx = new AudioContextClass();
+    if (ctx.state === "suspended") {
+      ctx.resume().catch(() => {});
+    }
+
+    const now = ctx.currentTime;
+
+    // 1. Firecracker patakha bursts (rapid sparkling micro-crackle pops)
+    const crackleCount = 9;
+    for (let i = 0; i < crackleCount; i++) {
+      const delay = i * 0.045 + Math.random() * 0.02;
+      const bufferSize = Math.floor(ctx.sampleRate * 0.04);
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let j = 0; j < bufferSize; j++) {
+        data[j] = (Math.random() * 2 - 1) * Math.exp(-j / (bufferSize * 0.3));
+      }
+
+      const noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+
+      const filter = ctx.createBiquadFilter();
+      filter.type = "bandpass";
+      filter.frequency.setValueAtTime(1400 + Math.random() * 2400, now + delay);
+      filter.Q.setValueAtTime(3.5, now + delay);
+
+      const gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.3, now + delay);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + delay + 0.038);
+
+      noise.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+
+      noise.start(now + delay);
+    }
+
+    // 2. Rising celebratory chime melody (Eb5, G5, Bb5, Eb6)
+    const notes = [622.25, 783.99, 932.33, 1244.5];
+    notes.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = idx === notes.length - 1 ? "sine" : "triangle";
+      osc.frequency.setValueAtTime(freq, now + 0.16 + idx * 0.07);
+
+      gain.gain.setValueAtTime(0.2, now + 0.16 + idx * 0.07);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.85 + idx * 0.1);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(now + 0.16 + idx * 0.07);
+      osc.stop(now + 1.2);
+    });
+  } catch {
+    // Non-blocking fallback
+  }
+}
+
+function FirecrackerCelebrationOverlay({
+  offer,
+  onClose,
+}: {
+  offer: { code: string; off: string; final: string };
+  onClose: () => void;
+}) {
+  // 48 festive firecracker particles radiating from center and sides
+  const particles = useMemo(() => {
+    return Array.from({ length: 48 }).map((_, i) => {
+      const angle = (i / 48) * 2 * Math.PI + (Math.random() * 0.25 - 0.12);
+      const distance = 80 + Math.random() * 180;
+      const x = Math.cos(angle) * distance;
+      const y = Math.sin(angle) * distance;
+      const size = 3 + Math.random() * 6;
+      const colors = ["#FBBF24", "#F59E0B", "#EC4899", "#10B981", "#38BDF8", "#FF6B35", "#F43F5E", "#A855F7"];
+      const color = colors[i % colors.length];
+      const delay = Math.random() * 0.25;
+      return { id: i, x, y, size, color, delay };
+    });
+  }, []);
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-hidden select-none">
+      {/* Soft translucent celebratory backdrop */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="absolute inset-0 bg-[#070514]/70 backdrop-blur-sm pointer-events-auto"
+        onClick={onClose}
+      />
+
+      {/* Radiating Firecracker Spark Particles */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        {particles.map((p) => (
+          <motion.div
+            key={p.id}
+            initial={{ x: 0, y: 0, scale: 0, opacity: 1 }}
+            animate={{ 
+              x: p.x, 
+              y: p.y, 
+              scale: [0, 1.5, 0.3], 
+              opacity: [1, 1, 0] 
+            }}
+            transition={{ duration: 1.3, delay: p.delay, ease: "easeOut" }}
+            className="absolute rounded-full"
+            style={{
+              width: p.size,
+              height: p.size,
+              backgroundColor: p.color,
+              boxShadow: `0 0 12px ${p.color}, 0 0 24px ${p.color}`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Center Festive Celebration Card */}
+      <motion.div
+        initial={{ scale: 0.65, y: 35, opacity: 0 }}
+        animate={{ scale: 1, y: 0, opacity: 1 }}
+        exit={{ scale: 0.75, y: -20, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 380, damping: 24 }}
+        className="pointer-events-auto relative w-full max-w-sm sm:max-w-md bg-gradient-to-b from-[#141833] via-[#090C1B] to-[#04050D] border-2 border-amber-400/60 rounded-3xl p-6 sm:p-7 shadow-[0_0_60px_rgba(251,191,36,0.35),0_25px_50px_rgba(0,0,0,0.9)] flex flex-col items-center text-center overflow-hidden z-10"
+      >
+        {/* Festive radiant golden wash */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(251,191,36,0.18)_0%,rgba(236,72,153,0.08)_50%,transparent_100%)] pointer-events-none" />
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent" />
+
+        {/* Header Badges with Diya Icons */}
+        <div className="flex items-center justify-center gap-2 mb-2">
+          <DiyaIcon lit className="w-6 h-6 drop-shadow-[0_0_12px_rgba(251,191,36,0.9)] animate-pulse" />
+          <span className="text-[10px] sm:text-[11px] font-mono font-black text-amber-300 uppercase tracking-widest bg-amber-400/15 border border-amber-400/35 px-3 py-1 rounded-full shadow-[0_0_12px_rgba(251,191,36,0.2)]">
+            ✨ DIWALI OFFER UNLOCKED! ✨
+          </span>
+          <DiyaIcon lit className="w-6 h-6 drop-shadow-[0_0_12px_rgba(251,191,36,0.9)] animate-pulse" />
+        </div>
+
+        {/* Big Discount Callout (e.g. ₹500 OFF or $5 OFF) */}
+        <div className="my-2 flex flex-col items-center">
+          <span className="text-4xl sm:text-5xl font-black font-sans tracking-tight bg-gradient-to-r from-amber-300 via-orange-300 to-amber-200 bg-clip-text text-transparent drop-shadow-[0_4px_18px_rgba(251,191,36,0.5)]">
+            {offer.off} OFF
+          </span>
+          <span className="text-xs sm:text-sm font-semibold text-emerald-400 mt-1.5 flex items-center gap-1.5">
+            <CheckCircle className="w-4 h-4 text-emerald-400 shrink-0" />
+            Coupon code copied to clipboard!
+          </span>
+        </div>
+
+        {/* Copied Code Chip */}
+        <div className="mt-3 flex items-center gap-2.5 bg-black/60 border border-amber-400/40 rounded-xl px-4 py-2 shadow-inner">
+          <span className="text-[11px] font-mono text-gray-400 font-medium">Code:</span>
+          <span className="font-mono font-black text-amber-300 tracking-wider text-base sm:text-lg">
+            {offer.code}
+          </span>
+          <span className="text-[10px] font-mono font-black text-emerald-400 bg-emerald-500/20 border border-emerald-500/30 px-2 py-0.5 rounded">
+            Copied ✓
+          </span>
+        </div>
+
+        {/* Final Price Hint & Deadline Notice */}
+        <div className="mt-3.5 flex flex-col items-center gap-1.5">
+          <p className="text-xs text-gray-300 font-medium">
+            Final course price: <span className="font-black text-emerald-400 text-sm sm:text-base font-sans">{offer.final}</span>
+          </p>
+          <div className="flex items-center gap-1.5 text-[11px] font-mono font-bold text-amber-300 bg-amber-400/10 border border-amber-400/25 px-2.5 py-1 rounded-md shadow-inner">
+            <Clock className="w-3.5 h-3.5 text-[#FF6B35] animate-pulse shrink-0" />
+            <span>Offer ends on November 8, 2026</span>
+          </div>
+        </div>
+
+        {/* Action Button */}
+        <div className="mt-5 w-full flex flex-col gap-2">
+          <a
+            href="#cta"
+            onClick={(e) => {
+              e.preventDefault();
+              onClose();
+              const cta = document.getElementById("cta");
+              if (cta) cta.scrollIntoView({ behavior: "smooth" });
+            }}
+            className="w-full py-2.5 sm:py-3 px-5 rounded-xl font-extrabold text-xs sm:text-sm text-slate-950 bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-400 hover:brightness-110 active:scale-98 transition-all duration-200 shadow-[0_0_20px_rgba(251,191,36,0.35)] flex items-center justify-center gap-2 cursor-pointer"
+          >
+            Claim {offer.off} Off at Checkout <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
+
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-gray-400 hover:text-white p-1.5 rounded-lg bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
+          aria-label="Close"
+        >
+          <X className="w-4 h-4" />
+        </button>
+      </motion.div>
+    </div>
   );
 }
 
@@ -333,18 +838,84 @@ const CHECKOUT_FEATURES = [
 export default function App() {
   const [isInteractive, setIsInteractive] = useState(false);
   const [activePaletteId, setActivePaletteId] = useState("amethyst");
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 5, minutes: 0, seconds: 0 });
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 5, minutes: 0, seconds: 0, totalHours: 5 });
   const [videoUrl, setVideoUrl] = useState("https://www.youtube.com/embed/LLBHPv4Wj1w");
   const [showStickyBottom, setShowStickyBottom] = useState(false);
   const [showMobilePricing, setShowMobilePricing] = useState(false);
   const [isMobile, setIsMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 768 : false);
   const [isSideBySide, setIsSideBySide] = useState(typeof window !== "undefined" ? window.innerWidth >= 1280 : false);
 
+  // Fixed Diwali Deadline: Nov 8, 2026 23:59:00 IST (+05:30)
+  const DIWALI_DEADLINE_MS = useMemo(() => new Date("2026-11-08T23:59:00+05:30").getTime(), []);
+  const [isDiwaliActive, setIsDiwaliActive] = useState(() => {
+    return Date.now() < new Date("2026-11-08T23:59:00+05:30").getTime();
+  });
+
+  // Diwali coupon unlocked state persisted in localStorage
+  const [isDiyaUnlocked, setIsDiyaUnlocked] = useState<boolean>(() => {
+    try {
+      return typeof window !== "undefined" && localStorage.getItem("cs_diwali_unlocked") === "true";
+    } catch {
+      return false;
+    }
+  });
+
+  const [copied, setCopied] = useState(false);
+  const [showFirecrackerCelebration, setShowFirecrackerCelebration] = useState(false);
+  const celebrationTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
   // Geo-based dynamic pricing state (Default: India pricing to prevent flickering)
   const [pricing, setPricing] = useState({
     originalPrice: "₹7,999",
     dealPrice: "₹2,999",
   });
+
+  // Geo-based Diwali offer details
+  // INDIA: code DIWALI500, "₹500 off", final price ₹2,499
+  // OTHER: code DIWALI5, "$5 off", final price $28
+  const diwaliOffer = useMemo(() => {
+    const isIndia = pricing.dealPrice.startsWith("₹");
+    return isIndia
+      ? { code: "DIWALI500", off: "₹500", final: "₹2,499" }
+      : { code: "DIWALI5", off: "$5", final: "$28" };
+  }, [pricing.dealPrice]);
+
+  const handleUnlockDiya = useCallback(() => {
+    setIsDiyaUnlocked(true);
+    try {
+      localStorage.setItem("cs_diwali_unlocked", "true");
+    } catch {
+      // Ignore storage errors
+    }
+  }, []);
+
+  const handleCopyCode = useCallback(() => {
+    try {
+      if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(diwaliOffer.code).catch(() => {});
+      }
+    } catch {
+      // Fallback
+    }
+
+    // Play synthesized celebratory firecracker crackle & chime
+    playFirecrackerCelebrationSound();
+
+    // Trigger visual celebratory firecracker burst animation
+    setShowFirecrackerCelebration(true);
+    if (celebrationTimeoutRef.current) {
+      clearTimeout(celebrationTimeoutRef.current);
+    }
+    celebrationTimeoutRef.current = setTimeout(() => {
+      setShowFirecrackerCelebration(false);
+    }, 4000);
+
+    setCopied(true);
+    handleUnlockDiya();
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
+  }, [diwaliOffer.code, handleUnlockDiya]);
 
   // Detect visitor's country on page load with 3-second timeout and sessionStorage caching
   useEffect(() => {
@@ -632,48 +1203,58 @@ export default function App() {
     };
   }, [isMobile]);
 
-  // Persistent live urgency countdown timer set to 5 Hours
+  // Fixed Diwali Deadline timer (or fallback to 5-hour urgency loop after deadline)
   useEffect(() => {
-    let targetTime = localStorage.getItem("cs_countdown_target_5h");
-    let targetTimestamp: number;
-    
-    if (!targetTime) {
-      targetTimestamp = Date.now() + (5 * 60 * 60 * 1000);
-      localStorage.setItem("cs_countdown_target_5h", String(targetTimestamp));
-    } else {
-      targetTimestamp = parseInt(targetTime, 10);
-      const now = Date.now();
-      if (targetTimestamp < now || (targetTimestamp - now > 5 * 60 * 60 * 1000)) {
-        targetTimestamp = now + (5 * 60 * 60 * 1000);
-        localStorage.setItem("cs_countdown_target_5h", String(targetTimestamp));
-      }
-    }
-
     const updateTimer = () => {
       const now = Date.now();
-      const difference = targetTimestamp - now;
+      const diwaliDiff = DIWALI_DEADLINE_MS - now;
 
-      if (difference <= 0) {
-        // Reset to exactly 5 hours to keep pressure live
-        const nextTarget = Date.now() + (5 * 60 * 60 * 1000);
-        targetTimestamp = nextTarget;
-        localStorage.setItem("cs_countdown_target_5h", String(nextTarget));
-        setTimeLeft({ days: 0, hours: 5, minutes: 0, seconds: 0 });
+      if (diwaliDiff > 0) {
+        setIsDiwaliActive(true);
+        const d = Math.floor(diwaliDiff / 86400000);
+        const h = Math.floor((diwaliDiff % 86400000) / 3600000);
+        const m = Math.floor((diwaliDiff % 3600000) / 60000);
+        const s = Math.floor((diwaliDiff % 60000) / 1000);
+        const totalHours = Math.floor(diwaliDiff / 3600000);
+        setTimeLeft({ days: d, hours: h, minutes: m, seconds: s, totalHours });
         return;
       }
 
-      const d = Math.floor(difference / (1000 * 60 * 60 * 24));
-      const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      const s = Math.floor((difference % (1000 * 60)) / 1000);
+      // After Diwali deadline: hide Diwali elements and restore old labels & 5h looping timer
+      setIsDiwaliActive(false);
 
-      setTimeLeft({ days: d, hours: h, minutes: m, seconds: s });
+      let targetTime = localStorage.getItem("cs_countdown_target_5h");
+      let targetTimestamp: number;
+      if (!targetTime) {
+        targetTimestamp = Date.now() + (5 * 60 * 60 * 1000);
+        localStorage.setItem("cs_countdown_target_5h", String(targetTimestamp));
+      } else {
+        targetTimestamp = parseInt(targetTime, 10);
+        if (targetTimestamp < now || (targetTimestamp - now > 5 * 60 * 60 * 1000)) {
+          targetTimestamp = now + (5 * 60 * 60 * 1000);
+          localStorage.setItem("cs_countdown_target_5h", String(targetTimestamp));
+        }
+      }
+
+      const difference = targetTimestamp - now;
+      if (difference <= 0) {
+        const nextTarget = Date.now() + (5 * 60 * 60 * 1000);
+        localStorage.setItem("cs_countdown_target_5h", String(nextTarget));
+        setTimeLeft({ days: 0, hours: 5, minutes: 0, seconds: 0, totalHours: 5 });
+        return;
+      }
+
+      const d = Math.floor(difference / 86400000);
+      const h = Math.floor((difference % 86400000) / 3600000);
+      const m = Math.floor((difference % 3600000) / 60000);
+      const s = Math.floor((difference % 60000) / 1000);
+      setTimeLeft({ days: d, hours: h, minutes: m, seconds: s, totalHours: h });
     };
 
     updateTimer();
     const interval = setInterval(updateTimer, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [DIWALI_DEADLINE_MS]);
 
   const circularHeroImage = (isMobileVersion: boolean) => (
     <motion.div 
@@ -794,6 +1375,16 @@ export default function App() {
         className="theme-container bg-[#0c0f20] text-gray-100 font-sans antialiased selection:bg-[var(--brand-accent)]/30 selection:text-[var(--brand-accent)] min-h-screen flex flex-col"
         style={themeStyles}
       >
+        {/* 1. Slim Diwali Top Bar */}
+        {isDiwaliActive && (
+          <DiwaliTopBar
+            diwaliOffer={diwaliOffer}
+            timeLeft={timeLeft}
+            copied={copied}
+            onCopy={handleCopyCode}
+          />
+        )}
+
         <Header />
 
         {/* 3. Hero Section */}
@@ -808,6 +1399,11 @@ export default function App() {
         <div className="absolute top-1/4 left-1/4 w-[350px] h-[350px] bg-[var(--brand-from)]/15 rounded-full blur-[40px] pointer-events-none z-0 mix-blend-screen animate-pulse duration-[20s]" />
         <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[var(--brand-to)]/12 rounded-full blur-[40px] pointer-events-none z-0 mix-blend-screen animate-pulse duration-[25s]" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#EC4899]/5 rounded-full blur-[40px] pointer-events-none z-0 mix-blend-screen" />
+
+        {/* Diwali subtle ambient gold bokeh glow - desktop only (<15% opacity, respects prefers-reduced-motion) */}
+        {isDiwaliActive && (
+          <div className="hidden md:block absolute top-1/3 right-1/4 w-[380px] h-[380px] bg-amber-400/[0.08] rounded-full blur-[70px] pointer-events-none z-0 mix-blend-screen motion-reduce:hidden animate-pulse duration-[14s]" />
+        )}
 
         <div className="max-w-7xl mx-auto flex flex-col gap-6 sm:gap-10 xl:gap-12 relative z-10">
           
@@ -1657,7 +2253,9 @@ export default function App() {
                 </span>
                 <div className="flex items-center gap-2.5 text-xs sm:text-sm font-mono tracking-wider text-amber-400 font-extrabold bg-[#FF6B35]/10 border border-[#FF6B35]/30 px-4 py-2 rounded-lg shadow-[0_0_15px_rgba(255,107,53,0.15)] animate-pulse">
                   <Clock className="w-4 h-4 text-[#FF6B35] animate-pulse shrink-0" />
-                  <span>{String(timeLeft.hours).padStart(2, "0")}h : {String(timeLeft.minutes).padStart(2, "0")}m : {String(timeLeft.seconds).padStart(2, "0")}s</span>
+                  <span>
+                    {formatCountdown(timeLeft)}
+                  </span>
                 </div>
               </div>
 
@@ -1741,10 +2339,30 @@ export default function App() {
                             <span className="text-4xl sm:text-5xl font-black text-white tracking-tighter bg-gradient-to-r from-white via-white to-[#FF6B35] bg-clip-text text-transparent font-sans leading-none drop-shadow-[0_2px_8px_rgba(124,58,237,0.3)]">
                               {pricing.dealPrice}
                             </span>
+                            {/* Touch 3: PRICE STRIKE-THROUGH HINT */}
+                            {isDiwaliActive && (
+                              <span className="text-[10px] sm:text-[11px] font-bold text-amber-400 tracking-wide mt-1 font-mono flex items-center gap-1">
+                                <span className="text-amber-400/80">With code:</span>
+                                <span className="text-emerald-400 font-extrabold">{diwaliOffer.final}</span>
+                              </span>
+                            )}
                           </div>
                         </div>
                       </div>
                     </div>
+
+                    {/* Touch 2: PRICING CARD "TAP THE DIYA" COUPON ROW */}
+                    {isDiwaliActive && (
+                      <div className="relative z-10">
+                        <DiyaCouponRow
+                          diwaliOffer={diwaliOffer}
+                          isUnlocked={isDiyaUnlocked}
+                          onUnlock={handleUnlockDiya}
+                          copied={copied}
+                          onCopy={handleCopyCode}
+                        />
+                      </div>
+                    )}
 
                     <div className="h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent relative z-10"></div>
 
@@ -1793,9 +2411,11 @@ export default function App() {
                   <Sparkles className="w-2.5 h-2.5 text-[#38BDF8]" />
                   SPECIAL DEAL
                 </span>
-                <div className="flex items-center gap-1.5 text-[10.5px] font-mono tracking-wider text-amber-400 font-extrabold bg-[#FF6B35]/10 border border-[#FF6B35]/30 px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(255,107,53,0.15)] animate-pulse">
+                <div className="flex items-center gap-1.5 text-[10.5px] font-mono tracking-wider text-amber-400 font-extrabold bg-[#FF6B35]/10 border border-[#FF6B35]/30 px-2.5 py-1.5 rounded-lg shadow-[0_0_15px_rgba(255,107,53,0.15)] animate-pulse whitespace-nowrap">
                   <Clock className="w-3.5 h-3.5 text-[#FF6B35] animate-pulse shrink-0" />
-                  <span>{String(timeLeft.hours).padStart(2, "0")}h : {String(timeLeft.minutes).padStart(2, "0")}m : {String(timeLeft.seconds).padStart(2, "0")}s</span>
+                  <span>
+                    {formatCountdown(timeLeft)}
+                  </span>
                 </div>
               </div>
 
@@ -1834,9 +2454,27 @@ export default function App() {
                       <span className="text-[2.85rem] font-black text-white tracking-tighter bg-gradient-to-r from-white via-white to-[#FF6B35] bg-clip-text text-transparent font-sans leading-none drop-shadow-[0_2px_10px_rgba(124,58,237,0.25)]">
                         {pricing.dealPrice}
                       </span>
+                      {/* Touch 3: PRICE STRIKE-THROUGH HINT */}
+                      {isDiwaliActive && (
+                        <span className="text-[10px] font-bold text-amber-400 tracking-wide mt-1 font-mono flex items-center gap-1">
+                          <span className="text-amber-400/80">With code:</span>
+                          <span className="text-emerald-400 font-extrabold">{diwaliOffer.final}</span>
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
+
+                {/* Touch 2: PRICING CARD "TAP THE DIYA" COUPON ROW */}
+                {isDiwaliActive && (
+                  <DiyaCouponRow
+                    diwaliOffer={diwaliOffer}
+                    isUnlocked={isDiyaUnlocked}
+                    onUnlock={handleUnlockDiya}
+                    copied={copied}
+                    onCopy={handleCopyCode}
+                  />
+                )}
 
                 <div className="h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent"></div>
 
@@ -1913,16 +2551,81 @@ export default function App() {
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 w-full">
           {/* Left Side: Logo and Redesigned Countdown Timer */}
           <div className="flex items-center gap-2.5">
-            <CartoonSmashLogo className="w-10 h-10 shrink-0" />
+            {isDiwaliActive ? (
+              <div className="w-10 h-10 shrink-0 flex items-center justify-center relative">
+                {/* Soft ambient amber glow behind diya flame */}
+                <div className="absolute inset-0 bg-amber-400/20 rounded-full blur-md pointer-events-none animate-pulse" />
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  className="w-9 h-9 relative z-10 drop-shadow-[0_0_8px_rgba(251,191,36,0.7)]"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <defs>
+                    <linearGradient id="bottom-diya-flame" x1="12" y1="2" x2="12" y2="12" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#FEF08A" />
+                      <stop offset="40%" stopColor="#FBBF24" />
+                      <stop offset="80%" stopColor="#EA580C" />
+                      <stop offset="100%" stopColor="#DC2626" />
+                    </linearGradient>
+                    <linearGradient id="bottom-diya-base" x1="12" y1="13" x2="12" y2="21" gradientUnits="userSpaceOnUse">
+                      <stop offset="0%" stopColor="#F59E0B" />
+                      <stop offset="60%" stopColor="#B45309" />
+                      <stop offset="100%" stopColor="#78350F" />
+                    </linearGradient>
+                  </defs>
+                  {/* Glowing gold flame with gentle flicker */}
+                  <g className="origin-bottom animate-pulse">
+                    <path
+                      d="M12 2.5C12 2.5 9 6.5 9 9.5C9 11.2 10.3 12.5 12 12.5C13.7 12.5 15 11.2 15 9.5C15 6.5 12 2.5 12 2.5Z"
+                      fill="url(#bottom-diya-flame)"
+                    />
+                    <path
+                      d="M12 4.5C12 4.5 10.2 7 10.2 9.5C10.2 10.5 11 11.3 12 11.3C13 11.3 13.8 10.5 13.8 9.5C13.8 7 12 4.5 12 4.5Z"
+                      fill="#FEF9C3"
+                    />
+                  </g>
+                  {/* Diya Clay Base */}
+                  <path
+                    d="M3.5 13.5C3.5 13.5 4.5 19 12 19C19.5 19 20.5 13.5 20.5 13.5C20.5 13.5 16.5 15 12 15C7.5 15 3.5 13.5 3.5 13.5Z"
+                    fill="url(#bottom-diya-base)"
+                  />
+                  <ellipse cx="12" cy="13.5" rx="8.5" ry="1.6" fill="#D97706" opacity="0.8" />
+                  <path
+                    d="M9.5 19C10 20 10.8 20.8 12 20.8C13.2 20.8 14 20 14.5 19H9.5Z"
+                    fill="#78350F"
+                  />
+                </svg>
+              </div>
+            ) : (
+              <CartoonSmashLogo className="w-10 h-10 shrink-0" />
+            )}
             <div className="text-left flex flex-col gap-0.5">
-              <span className="text-[9px] font-normal text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded uppercase tracking-wider w-max">Offer Ends In</span>
-              <div className="flex items-center gap-1.5 text-[11px] font-mono font-black bg-white/5 border border-white/10 rounded-md px-2 py-0.5 shadow-inner">
+              <span className="text-[9px] font-normal text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded uppercase tracking-wider w-max">
+                {isDiwaliActive ? "Diwali Special Offer Ends In" : "Offer Ends In"}
+              </span>
+              <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono font-black bg-white/5 border border-white/10 rounded-md px-2 py-0.5 shadow-inner whitespace-nowrap">
                 <Clock className="w-3.5 h-3.5 text-[#FF6B35] animate-pulse shrink-0" />
-                <span className="text-[#FF6B35]">{String(timeLeft.hours).padStart(2, "0")}h</span>
-                <span className="text-white/40">:</span>
-                <span className="text-white">{String(timeLeft.minutes).padStart(2, "0")}m</span>
-                <span className="text-white/40">:</span>
-                <span className="text-white">{String(timeLeft.seconds).padStart(2, "0")}s</span>
+                {timeLeft.days > 0 ? (
+                  <>
+                    <span className="text-[#FF6B35]">{String(timeLeft.days).padStart(2, "0")}d</span>
+                    <span className="text-white/40">:</span>
+                    <span className="text-white">{String(timeLeft.hours).padStart(2, "0")}h</span>
+                    <span className="text-white/40">:</span>
+                    <span className="text-white">{String(timeLeft.minutes).padStart(2, "0")}m</span>
+                    <span className="text-white/40">:</span>
+                    <span className="text-white">{String(timeLeft.seconds).padStart(2, "0")}s</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="text-[#FF6B35]">{String(timeLeft.hours).padStart(2, "0")}h</span>
+                    <span className="text-white/40">:</span>
+                    <span className="text-white">{String(timeLeft.minutes).padStart(2, "0")}m</span>
+                    <span className="text-white/40">:</span>
+                    <span className="text-white">{String(timeLeft.seconds).padStart(2, "0")}s</span>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -2201,6 +2904,16 @@ export default function App() {
               </div>
             </motion.div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Diwali Firecracker Celebration Modal with Sound & Sparks */}
+      <AnimatePresence>
+        {showFirecrackerCelebration && (
+          <FirecrackerCelebrationOverlay
+            offer={diwaliOffer}
+            onClose={() => setShowFirecrackerCelebration(false)}
+          />
         )}
       </AnimatePresence>
 
