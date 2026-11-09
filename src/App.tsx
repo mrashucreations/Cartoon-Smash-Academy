@@ -245,6 +245,15 @@ function DiwaliTopBar({
   copied: boolean;
   onCopy: () => void;
 }) {
+  const [mobileSlide, setMobileSlide] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setMobileSlide((prev) => (prev === 0 ? 1 : 0));
+    }, 3200);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div 
       className="w-full bg-[#0c0f20]/95 backdrop-blur-md border-b border-amber-500/25 text-amber-100 text-xs select-none relative z-50 flex items-center justify-center px-2.5 sm:px-4 overflow-hidden shadow-[0_2px_15px_rgba(251,191,36,0.06)]"
@@ -264,9 +273,12 @@ function DiwaliTopBar({
             <span className="absolute w-5 h-5 rounded-full bg-amber-400/25 blur-[3px] animate-pulse" />
             <DiyaIcon lit className="w-4 h-4 shrink-0 relative z-10 drop-shadow-[0_0_6px_rgba(251,191,36,0.85)] -mt-0.5" />
           </div>
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500/15 via-orange-500/10 to-purple-500/15 border border-amber-400/30 text-[10px] font-mono font-black text-amber-300 uppercase tracking-widest shadow-[0_0_10px_rgba(251,191,36,0.12)]">
-            <Sparkles className="w-2.5 h-2.5 text-amber-400 animate-pulse" />
-            Diwali Special Offer
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500/20 via-orange-500/15 to-purple-500/20 border border-amber-400/40 text-[10px] font-mono font-black text-amber-300 uppercase tracking-wider shadow-[0_0_12px_rgba(251,191,36,0.18)]">
+            <Sparkles className="w-2.5 h-2.5 text-amber-400 animate-pulse shrink-0" />
+            <span>Extended Diwali Offer</span>
+            <span className="text-white/30 font-sans">•</span>
+            <span className="text-orange-400 font-extrabold tracking-wide">Last Chance</span>
+            <span className="text-amber-200/90 font-medium normal-case tracking-normal text-[10px]">(Ends 13th Nov)</span>
           </span>
         </div>
 
@@ -314,26 +326,64 @@ function DiwaliTopBar({
         </div>
       </div>
 
-      {/* Mobile view: single line with guaranteed safe fit and non-overflowing Copy button */}
-      <div className="flex sm:hidden items-center justify-between gap-2 text-[11px] tracking-tight w-full max-w-full overflow-hidden relative z-10 h-full">
-        <div className="flex items-center gap-1.5 truncate min-w-0 flex-1">
+      {/* Mobile view: dynamic alternating dual-state banner with fixed Copy action */}
+      <div className="flex sm:hidden items-center justify-between gap-1.5 text-[11px] tracking-tight w-full max-w-full overflow-hidden relative z-10 h-full">
+        <div className="flex items-center gap-1.5 min-w-0 flex-1 overflow-hidden h-full">
+          {/* Glowing Golden Diya Icon */}
           <div className="relative flex items-center justify-center shrink-0">
-            <span className="absolute w-4 h-4 rounded-full bg-amber-400/25 blur-[2px] animate-pulse" />
-            <DiyaIcon lit className="w-3.5 h-3.5 shrink-0 relative z-10 drop-shadow-[0_0_5px_rgba(251,191,36,0.85)] -mt-0.5" />
+            <span className="absolute w-4 h-4 rounded-full bg-amber-400/30 blur-[3px] animate-pulse" />
+            <DiyaIcon lit className="w-3.5 h-3.5 shrink-0 relative z-10 drop-shadow-[0_0_6px_rgba(251,191,36,0.9)] -mt-0.5" />
           </div>
-          <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-amber-400/10 border border-amber-400/30 text-[9px] font-mono font-black text-amber-300 uppercase tracking-wider shrink-0">
-            Diwali Special
-          </span>
-          <span className="truncate text-gray-300 text-[10.5px]">
-            <span className="font-extrabold text-amber-300">{diwaliOffer.off} OFF</span> ·{" "}
-            <span className="font-mono font-black text-amber-200 bg-[#141833] px-1 py-0.5 rounded border border-amber-400/30 text-[10px]">{diwaliOffer.code}</span>
-          </span>
+
+          {/* Smooth Auto-Alternating Creative Banner */}
+          <div className="relative flex-1 min-w-0 h-6 overflow-hidden flex items-center">
+            <AnimatePresence mode="wait">
+              {mobileSlide === 0 ? (
+                <motion.div
+                  key="slide-offer"
+                  initial={{ y: 9, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -9, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="flex items-center gap-1.5 truncate w-full"
+                >
+                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500/25 via-orange-500/20 to-purple-500/20 border border-amber-400/40 text-[9px] font-mono font-black text-amber-300 uppercase tracking-tight shadow-sm shrink-0">
+                    <Sparkles className="w-2.5 h-2.5 text-amber-400 animate-pulse" />
+                    Extended Diwali Offer
+                  </span>
+                  <span className="text-orange-400 font-extrabold text-[9.5px] font-mono tracking-tight shrink-0 animate-pulse">
+                    Ends 13 Nov!
+                  </span>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="slide-code"
+                  initial={{ y: 9, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -9, opacity: 0 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="flex items-center gap-1.5 truncate w-full"
+                >
+                  <span className="font-extrabold text-amber-300 text-[11px] drop-shadow-[0_0_8px_rgba(251,191,36,0.4)] shrink-0">
+                    Extra {diwaliOffer.off} OFF
+                  </span>
+                  <span className="text-white/30 text-[10px]">•</span>
+                  <span className="text-[10px] text-gray-300 shrink-0">code:</span>
+                  <span className="font-mono font-black text-amber-200 bg-[#141833] px-1.5 py-0.5 rounded border border-amber-400/35 text-[10px] tracking-wide shrink-0 shadow-inner">
+                    {diwaliOffer.code}
+                  </span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
+
+        {/* Tactile Copy Button - Always Visible & Clickable */}
         <button
           onClick={onCopy}
           type="button"
           aria-label="Copy Diwali coupon code"
-          className="shrink-0 h-6.5 px-2.5 rounded-md bg-gradient-to-r from-amber-400/25 to-orange-500/25 hover:from-amber-400/40 hover:to-orange-500/40 active:scale-95 text-amber-200 border border-amber-400/40 text-[10px] font-mono font-bold transition-all cursor-pointer flex items-center justify-center gap-1 shadow-sm"
+          className="shrink-0 h-6.5 px-2.5 rounded-md bg-gradient-to-r from-amber-400/25 via-orange-500/25 to-amber-400/25 hover:from-amber-400/40 hover:to-orange-500/40 active:scale-95 text-amber-200 border border-amber-400/40 text-[10px] font-mono font-bold transition-all cursor-pointer flex items-center justify-center gap-1 shadow-[0_0_8px_rgba(251,191,36,0.15)] min-w-[52px]"
         >
           {copied ? (
             <span className="text-emerald-400 font-bold flex items-center gap-0.5">
@@ -451,7 +501,7 @@ function DiyaCouponRow({
           )}
         </div>
         <span className="text-[11px] sm:text-xs font-semibold text-amber-200/90 group-hover:text-amber-100 transition-colors tracking-wide truncate">
-          Tap the diya to reveal your Diwali code
+          Tap diya to unlock Extended Diwali code
         </span>
       </div>
 
@@ -597,12 +647,12 @@ function FirecrackerCelebrationOverlay({
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-amber-400 to-transparent" />
 
         {/* Header Badges with Diya Icons */}
-        <div className="flex items-center justify-center gap-2 mb-2">
-          <DiyaIcon lit className="w-6 h-6 drop-shadow-[0_0_12px_rgba(251,191,36,0.9)] animate-pulse" />
-          <span className="text-[10px] sm:text-[11px] font-mono font-black text-amber-300 uppercase tracking-widest bg-amber-400/15 border border-amber-400/35 px-3 py-1 rounded-full shadow-[0_0_12px_rgba(251,191,36,0.2)]">
-            ✨ DIWALI OFFER UNLOCKED! ✨
+        <div className="flex items-center justify-center gap-1.5 sm:gap-2 mb-2">
+          <DiyaIcon lit className="w-5 sm:w-6 h-5 sm:h-6 drop-shadow-[0_0_12px_rgba(251,191,36,0.9)] animate-pulse shrink-0" />
+          <span className="text-[10px] sm:text-[11px] font-mono font-black text-amber-300 uppercase tracking-wider bg-amber-400/15 border border-amber-400/35 px-2.5 sm:px-3 py-1 rounded-full shadow-[0_0_12px_rgba(251,191,36,0.2)] whitespace-nowrap">
+            ✨ EXTENDED DIWALI OFFER ✨
           </span>
-          <DiyaIcon lit className="w-6 h-6 drop-shadow-[0_0_12px_rgba(251,191,36,0.9)] animate-pulse" />
+          <DiyaIcon lit className="w-5 sm:w-6 h-5 sm:h-6 drop-shadow-[0_0_12px_rgba(251,191,36,0.9)] animate-pulse shrink-0" />
         </div>
 
         {/* Big Discount Callout (e.g. ₹500 OFF or $5 OFF) */}
@@ -632,9 +682,9 @@ function FirecrackerCelebrationOverlay({
           <p className="text-xs text-gray-300 font-medium">
             Final course price: <span className="font-black text-emerald-400 text-sm sm:text-base font-sans">{offer.final}</span>
           </p>
-          <div className="flex items-center gap-1.5 text-[11px] font-mono font-bold text-amber-300 bg-amber-400/10 border border-amber-400/25 px-2.5 py-1 rounded-md shadow-inner">
+          <div className="flex items-center gap-1.5 text-[10.5px] sm:text-[11px] font-mono font-bold text-amber-300 bg-amber-400/10 border border-amber-400/25 px-2.5 py-1 rounded-md shadow-inner whitespace-nowrap">
             <Clock className="w-3.5 h-3.5 text-[#FF6B35] animate-pulse shrink-0" />
-            <span>Offer ends on November 8, 2026</span>
+            <span>Last Chance · Ends Nov 13, 2026</span>
           </div>
         </div>
 
@@ -845,10 +895,10 @@ export default function App() {
   const [isMobile, setIsMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 768 : false);
   const [isSideBySide, setIsSideBySide] = useState(typeof window !== "undefined" ? window.innerWidth >= 1280 : false);
 
-  // Fixed Diwali Deadline: Nov 8, 2026 23:59:00 IST (+05:30)
-  const DIWALI_DEADLINE_MS = useMemo(() => new Date("2026-11-08T23:59:00+05:30").getTime(), []);
+  // Fixed Diwali Deadline: Extended to Nov 13, 2026 23:59:00 IST (+05:30)
+  const DIWALI_DEADLINE_MS = useMemo(() => new Date("2026-11-13T23:59:00+05:30").getTime(), []);
   const [isDiwaliActive, setIsDiwaliActive] = useState(() => {
-    return Date.now() < new Date("2026-11-08T23:59:00+05:30").getTime();
+    return Date.now() < new Date("2026-11-13T23:59:00+05:30").getTime();
   });
 
   // Diwali coupon unlocked state persisted in localStorage
@@ -2342,7 +2392,7 @@ export default function App() {
                             {/* Touch 3: PRICE STRIKE-THROUGH HINT */}
                             {isDiwaliActive && (
                               <span className="text-[10px] sm:text-[11px] font-bold text-amber-400 tracking-wide mt-1 font-mono flex items-center gap-1">
-                                <span className="text-amber-400/80">With code:</span>
+                                <span className="text-amber-400/90">With Diwali code:</span>
                                 <span className="text-emerald-400 font-extrabold">{diwaliOffer.final}</span>
                               </span>
                             )}
@@ -2457,7 +2507,7 @@ export default function App() {
                       {/* Touch 3: PRICE STRIKE-THROUGH HINT */}
                       {isDiwaliActive && (
                         <span className="text-[10px] font-bold text-amber-400 tracking-wide mt-1 font-mono flex items-center gap-1">
-                          <span className="text-amber-400/80">With code:</span>
+                          <span className="text-amber-400/90">With Diwali code:</span>
                           <span className="text-emerald-400 font-extrabold">{diwaliOffer.final}</span>
                         </span>
                       )}
@@ -2602,8 +2652,9 @@ export default function App() {
               <CartoonSmashLogo className="w-10 h-10 shrink-0" />
             )}
             <div className="text-left flex flex-col gap-0.5">
-              <span className="text-[9px] font-normal text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded uppercase tracking-wider w-max">
-                {isDiwaliActive ? "Diwali Special Offer Ends In" : "Offer Ends In"}
+              <span className="text-[8.5px] sm:text-[9px] font-black text-amber-300 bg-gradient-to-r from-amber-500/20 via-orange-500/15 to-purple-500/20 border border-amber-400/40 px-1.5 py-0.5 rounded uppercase tracking-wider w-max flex items-center gap-1 shadow-[0_0_8px_rgba(251,191,36,0.18)] whitespace-nowrap">
+                <Sparkles className="w-2.5 h-2.5 text-amber-400 animate-pulse shrink-0" />
+                {isDiwaliActive ? "Extended Diwali • Ends 13 Nov" : "Offer Ends In"}
               </span>
               <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] font-mono font-black bg-white/5 border border-white/10 rounded-md px-2 py-0.5 shadow-inner whitespace-nowrap">
                 <Clock className="w-3.5 h-3.5 text-[#FF6B35] animate-pulse shrink-0" />
